@@ -1,0 +1,52 @@
+﻿@model Usuario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/LoginSheet.css" asp-append-version="true" />
+</head>
+
+<body>
+    <form asp-controller="Login" asp-action="Login" method="post">
+        <div class="login-container">
+            <div class="login-form">
+                <div class="form-group">
+                    <div class="welcome-text">
+                        <p>Bienvenido al</p>
+                        <h2>Simulador de Canvas</h2>
+                        <p>Facilitando la enseñanza y el aprendizaje</p>
+                    </div>
+                    @if (ViewData.ModelState.ContainsKey(string.Empty))
+                    {
+                        <div class="alert alert-danger mb-1" role="alert">
+                            @Html.Raw(ViewData.ModelState[string.Empty].Errors.FirstOrDefault()?.ErrorMessage)
+                        </div>
+                    }
+                    <label for="email" class="form-label">Email: </label>
+                    <input type="text" class="form-control" id="email" asp-for="Email" oninput="validateForm()">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password: </label>
+                    <input type="password" class="form-control" id="password" asp-for="Password" oninput="validateForm()">
+                </div>
+
+                <button id="loginButton" type="submit" class="btn-primary mt-4" disabled>Iniciar sesión</button>             
+                <button type="button" class="btn-info mt-4">Necesito ayuda</button>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/js/Login.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

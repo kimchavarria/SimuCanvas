@@ -1,0 +1,68 @@
+﻿body {
+    padding-top: 70px;
+    overflow-x: hidden; 
+}
+
+.main-content {
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+    overflow-x: hidden; 
+}
+
+.navbar-brand img {
+    padding-right: 10px; /* Ajusta según sea necesario */
+    padding-left: 10px; /* Ajusta según sea necesario */
+}
+
+.navbar-nav .nav-item {
+    margin-right: 10px; /* Ajusta según sea necesario */
+}
+
+.col-md-6 {
+    width: 48%;
+    overflow-x: hidden; /* Deshabilita el desplazamiento  */
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.table-container {
+    overflow-y: auto;
+    max-height: 280px;
+    margin: 10px auto;
+    padding-left: 10px; /* Ajusta según sea necesario */
+}
+.table-containerr {
+    overflow-y: auto;
+    max-height: 280px;
+    margin: 10px auto;
+    position: relative; /* Agrega posicionamiento relativo */
+}
+
+.btn-primary {
+    padding: 0.375rem 0.75rem; /* Ajusta según sea necesario */
+    margin-top: 20px; /* Ajusta según sea necesario */
+}
+
+table {
+   width: 100%;
+    border-collapse: collapse;
+    //margin-bottom: 20px;
+    text-align: center;
+}
+
+th, td {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+th {
+    background-color: #f2f2f2;
+}

@@ -1,0 +1,53 @@
+﻿USE SimCanvas;
+GO
+
+--Trigger so that only profesors can be referenced in course
+CREATE TRIGGER EnforceProfessorRole
+ON COURSE
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM inserted i
+        JOIN USUARIOS u ON i.faculty_id = u.id_usuario
+        WHERE u.role <> 'profesor'
+    )
+    BEGIN
+        RAISERROR ('Only users with role "profesor" can be assigned as faculty for courses.', 16, 1)
+        ROLLBACK TRANSACTION
+    END
+END;
+
+
+
+GO
+-- Trigger para asegurar que solo estudiantes pueden ser referenciados en registro
+CREATE TRIGGER EnforceStudentRole
+ON REGISTRO
+AFTER INSERT, UPDATE
+AS
+BEGIN
+    IF EXISTS (
+        SELECT 1 
+        FROM inserted i
+        JOIN USUARIOS u ON i.student_id = u.id_usuario
+        WHERE u.role <> 'estudiante'
+    )
+    BEGIN
+        RAISERROR ('Only users with role "estudiante" can be assigned as students for registration.', 16, 1)
+        ROLLBACK TRANSACTION
+    END
+END;
+
+
+
+
+
+
+
+
+
+
+
+

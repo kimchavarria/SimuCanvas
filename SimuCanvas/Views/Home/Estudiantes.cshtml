@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Estudiantes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/EstudianteHomeSheet.css" asp-append-version="true" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 left-container">
+            <!-- imagen con clase "img-fluid" para que se ajuste al tamaño de la pantalla -->
+            <img src="~/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+            <!-- Botones del lado izquierdo -->
+            <div class="perfil-btn">
+                <a href="@Url.Action("PerfilEstudiante", "Estudiante")" type="button" class="btn btn-secondary btn-block">
+                    <i class="fas fa-user"></i>
+                    Perfil
+                </a>
+            </div>
+            <div class="cursos-btn">
+                <a href="@Url.Action("CursosEstudiante", "Estudiante")" type="button" class="btn btn-secondary btn-block">
+                    <i class="fas fa-book"></i>
+                    Cursos
+                </a>
+            </div>
+            <div class="signout-btn">
+                <!-- Botón para signout, ejecuta la función logout() cuando se hace click -->
+                <form asp-action="SignOut" asp-controller="Estudiante" method="post">
+                    <button type="submit" class="btn btn-dark btn-block">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Sign Out
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <!-- Información de bienvenida al lado derecho -->
+            <div class="bienvenida-info">
+                <h2>Bienvenido al Simulador de Canvas</h2>
+                <div class="scroll-box mt-5">
+                    <p>ULACIT ofrece a sus estudiantes y docentes un entorno de aprendizaje moderno, atractivo y accesible, utilizando la plataforma de educación en línea “Blackboard Learn Ultra”. Por medio de esta herramienta, el aprendizaje en línea puede desarrollarse en un entorno sincrónico, con interacción instantánea; o asíncrono, como en el caso de debates entre estudiantes. Incluye una herramienta anti-plagio, que se usa para promover la originalidad y crear oportunidades que ayuden a los alumnos a citar correctamente las fuentes, al parafrasear. Los estudiantes y profesores pueden ingresar y hacer uso de la plataforma por medio de dispositivos móviles, de tal forma que facilita soluciones de vanguardia que permiten desarrollar modos flexibles y escalables para la entrega de este servicio.</p>
+
+                    <p>Integrada con la plataforma “Blackboard Learn Ultra”, ULACIT ofrece a la comunidad universitaria la solución para conferencias web “Blackboard Collaborate”, desarrollada bajo el estándar más actualizado de comunicación web en tiempo real. Funciona directamente desde el navegador, sin necesidad de instalación de software ni plugins. Se encuentra disponible a través de dispositivos móviles o computadoras fijas, de tal forma que estudiantes y profesores pueden colaborar en línea independientemente de dónde se encuentren. Las sesiones de Collaborate pueden estar activas por más de un año, o simplemente durar algunos minutos, según sus necesidades, para así proporcionar un alto nivel de flexibilidad. A su vez, es posible que los moderadores graben las sesiones para compartirlas con sus alumnos en cualquier momento.</p>
+
+                    <p>Blackboard es el proveedor de tecnología educativa más grande del mundo, garantía que nos permite contar con un soporte adecuado y justo a tiempo en caso de que ocurra cualquier incidente que afecte el servicio. A través de esta plataforma, ULACIT se suma a la comunidad internacional de instituciones de educación superior que tienen acceso a los recursos de información, sobre innovación y mejores prácticas en educación virtual, que comparten las universidades afiliadas alrededor del mundo. En el sitio web de Blackboard existe una amplia variedad de materiales de capacitación como los webinars orientados a maximizar el aprovechamiento de esta plataforma, los tutoriales y la ayuda en línea; y materiales dirigidos tanto para estudiantes como para docentes, disponibles en varios idiomas incluido el idioma español.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

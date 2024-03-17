@@ -1,0 +1,61 @@
+﻿@model Usuario
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Perfil Estudiante</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/PerfilEstudianteSheet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <!-- Contenedor izquierdo para botones -->
+            <div class="col-md-3 left-container">
+                <img src="~/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+                <div class="home-btn">
+                    <a href="@Url.Action("Estudiantes", "Home")" type="button" class="btn btn-secondary btn-block">
+                        <i class="fas fa-home"></i>
+                        Home 
+                    </a>
+                </div>
+                <div class="cursos-btn">
+                    <a href="@Url.Action("CursosEstudiante", "Estudiante")" type="button" class="btn btn-secondary btn-block">
+                        <i class="fas fa-book"></i>
+                        Cursos
+                    </a>
+                </div>
+                <div class="signout-btn">
+                    <form asp-action="SignOut" asp-controller="Estudiante" method="post">
+                        <button type="submit" class="btn btn-dark btn-block">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Sign Out
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <!-- Contenedor derecho para la información -->
+            <div class="col-md-9">
+                <h1>@Model.Name</h1>
+                <div class="section">
+                    <h3>Basic Information</h3>
+                    <p><strong>Student ID: </strong>@Model.IdUsuario</p>
+                    <p><strong>Email Address: </strong> @Model.Email</p>
+                    <p><strong>Birthday: </strong> @Model.Dob.ToShortDateString()</p>
+                </div>
+                <div class="section">
+                    <h2>Additional Information</h2>
+                    <p><strong>Address: </strong> @Model.Address</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

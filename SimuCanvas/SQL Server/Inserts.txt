@@ -1,0 +1,22 @@
+﻿-- Inserts para la tabla USUARIOS
+INSERT INTO USUARIOS (name, address, dob, email, password, role) VALUES 
+('Laura Smith', '123 Calle Principal, San José, Costa Rica', '1999-05-12', 'laura.smith@ulacit.ed.cr', 's123', 'estudiante'),
+('Daniel Johnson', '456 Avenida Central, San José, Costa Rica', '1998-09-25', 'daniel.johnson@ulacit.ed.cr', 's456', 'estudiante'),
+('Sofia Martinez', '789 Calle Secundaria, San José, Costa Rica', '2000-02-18', 'sofia.martinez@ulacit.ed.cr', 's789', 'estudiante'),
+('Liam Thompson', '321 Calle Norte, Puntarenas, Costa Rica', '1997-11-30', 'liam.thompson@ulacit.ed.cr', 's1112', 'estudiante'),
+('Isabella Ramirez', '654 Avenida Sur, San José, Costa Rica', '1999-08-07', 'isabella.ramirez@ulacit.ed.cr', 's1314', 'estudiante'),
+('Ethan Wilson', '987 Calle Oeste, San José, Costa Rica', '1998-04-23', 'ethan.wilson@ulacit.ed.cr', 's1516', 'estudiante'),
+('Olivia Anderson', '147 Avenida Este, Heredia, Costa Rica', '2001-03-15', 'olivia.anderson@ulacit.ed.cr', 's1718', 'estudiante'),
+('Benjamin Garcia', '258 Calle Central, San José, Costa Rica', '1996-12-04', 'benjamin.garcia@ulacit.ed.cr', 's1920', 'estudiante'),
+('Ava Clark', '369 Avenida Principal, Limón, Costa Rica', '2000-07-22', 'ava.clark@ulacit.ed.cr', 's2122', 'estudiante'),
+('Lucas Adams', '963 Calle Secundaria, San José, Costa Rica', '1997-10-08', 'lucas.adams@ulacit.ed.cr', 's2324', 'estudiante'),
+('Kimberly Chavarría', '789 Avenida Principal, San José, Costa Rica', '1995-04-18', 'kimberly@ulacit.ed.cr', 'p123', 'profesor'),
+('Tamara Rojas', '123 San Jose, Costa Rica', '1990-05-15', 'tamara@ulacit.ed.cr', 'p456', 'profesor');
+
+-- Inserts for COURSE table
+INSERT INTO COURSE (faculty_id, title, description, credits, initialDate, finalDate, maxStudents)
+VALUES 
+(11, 'Introduction to Computer Science', 'An introduction to computer science concepts', 3, '2024-04-01', '2024-06-01', 8),
+(12, 'Advanced Mathematics', 'Advanced topics in mathematics', 4, '2024-04-15', '2024-07-15', 6),
+(11, 'Web Development', 'Building dynamic websites using modern web technologies', 3, '2024-05-01', '2024-07-01', 8);
+

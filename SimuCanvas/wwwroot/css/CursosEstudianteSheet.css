@@ -1,0 +1,57 @@
+﻿body {
+    background-color: #FFFFFF; /* Color de fondo del cuerpo de la página */
+}
+
+/* Estilo para el contenedor principal */
+.container {
+    margin-top: 20px; /* Margen superior del contenedor */
+}
+
+/* Estilo para el contenedor del lado izquierdo */
+.left-container {
+    background-color: #d0abee; /* Color de fondo */
+    padding: 20px; /* Espacio interior */
+}
+
+/* Estilo para los botones en el lado izquierdo */
+.perfil-btn,
+.signout-btn {
+    margin-bottom: 10px; /* Margen inferior  */
+    background-color: transparent; /* Cambiar el color de fondo a transparente */
+    border: none; /* Eliminar el borde */
+    width: 100%; /* Hacer que los botones ocupen todo el ancho del contenedor */
+    text-align: center;
+}
+
+/* Estilo para la información en el lado derecho */
+.cursos-info {
+    background-color: #FFFFFF; /* Color de fondo */
+    padding: 20px; /* Espacio interior de la información  */
+    border-radius: 5px; /* Borde redondeado  */
+}
+
+/* Estilos para la scrollbox */
+.scroll-box {
+    max-height: 600px; /* Altura máxima */
+    overflow-y: auto; /* poner el desplazamiento vertical */
+}
+
+.materia-card {
+    width: 200px;
+    height: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+    .materia-card h3 {
+        margin: 0 0 5px;
+    }
+
+    .materia-card p {
+        margin: 0;
+    }

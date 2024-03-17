@@ -1,0 +1,28 @@
+﻿body {
+    background-color: #FFFFFF; /* Color de fondo del cuerpo de la página */
+}
+
+/* Estilo para el contenedor principal */
+.container {
+    margin-top: 20px; /* Margen superior del contenedor */
+}
+
+/* Estilo para el contenedor del lado izquierdo */
+.left-container {
+    background-color: #BF3131; /* Color de fondo */
+    padding: 20px; /* Espacio interior */
+}
+
+/* Estilo para los botones en el lado izquierdo */
+.home-btn,
+.cursos-btn,
+.signout-btn {
+    margin-bottom: 10px; /* Margen inferior  */
+    background-color: transparent; /* Cambiar el color de fondo a transparente */
+    border: none; /* Eliminar el borde */
+    width: 100%; /* Hacer que los botones ocupen todo el ancho del contenedor */
+    text-align: center;
+}
+
+
+
