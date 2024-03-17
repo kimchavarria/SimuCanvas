@@ -39,6 +39,12 @@ namespace SimuCanvas.Controllers
             return View();
         }
 
+        public IActionResult detalleCursos()
+        {
+            return View();
+        }
+
+
         public async Task<IActionResult> SignOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
