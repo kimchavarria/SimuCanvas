@@ -7,7 +7,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>CursosProfesor</title>
+    <title>Cursos Profesor</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/CursosProfesorSheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -19,7 +19,7 @@
             <div class="col-md-3 left-container">
                 <img src="~/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
                 <div class="home-btn">
-                    <a href="@Url.Action("Profesor", "Home")" type="button" class="btn btn-secondary btn-block">
+                    <a href="@Url.Action("Profesor", "Home")" type="button" class="btn btn-secondary btn-block mb-2">
                         <i class="fas fa-home"></i>
                         Home
                     </a>
@@ -38,40 +38,40 @@
                         </form>
                     </div>
                 </div>
-
-                <div class="col-md-9">
-                    <div class="cursos-info">
-                        <h2>Cursos Profesor</h2>
-                        <div class="admin-btn">
-                            <a href="@Url.Action("AdminEstudiantes", "Profesor")" type="button" class="btn btn-danger">Administración de Estudiantes</a>
-                        </div>
-                        <div class="materia-card text-center" style="width: 14rem;">
-                            <h3>Programación I</h3>
-                            <p><strong>Tipo:</strong> Virtual</p>
-                            <p><strong>Profesor:</strong> Juan Pérez</p>
-                            <a href="#" class="btn btn-success mt-3">Programacion I</a>
-                        </div>
-                        <div class="materia-card text-center" style="width: 14rem;">
-                            <h3>Sistemas Operativos</h3>
-                            <p><strong>Tipo:</strong> Presencial</p>
-                            <p><strong>Profesor:</strong> Ana López</p>
-                            <a href="#" class="btn btn-success mt-3">Sistemas Operativos</a>
-                        </div>
-                        <div class="materia-card text-center" style="width: 14rem;">
-                            <h3>Inglés IV</h3>
-                            <p><strong>Tipo:</strong> Virtual</p>
-                            <p><strong>Profesor:</strong> Carlos Gómez</p>
-                            <a href="#" class="btn btn-success mt-3">Inglés IV</a>
-                        </div>
-                        <div class="materia-card text-center" style="width: 14rem;">
-                            <h3>Electrónica Digital</h3>
-                            <p><strong>Tipo:</strong> Virtual</p>
-                            <p><strong>Profesor:</strong> Laura González</p>
-                            <a href="#" class="btn btn-success mt-3">Electrónica Digital</a>
-                        </div>
+            </div>
+            <div class="col-md-9">
+                <div class="cursos-info">
+                    <h2>Cursos Profesor</h2>
+                    <div class="admin-btn">
+                        <a href="@Url.Action("AdminEstudiantes", "Profesor")" type="button" class="btn btn-danger">Administración de Estudiantes</a>
+                    </div>
+                    <div class="materia-card text-center" style="width: 14rem;">
+                        <h3>Programación I</h3>
+                        <p><strong>Tipo:</strong> Virtual</p>
+                        <p><strong>Profesor:</strong> Juan Pérez</p>
+                        <a href="#" class="btn btn-success mt-3">Programacion I</a>
+                    </div>
+                    <div class="materia-card text-center" style="width: 14rem;">
+                        <h3>Sistemas Operativos</h3>
+                        <p><strong>Tipo:</strong> Presencial</p>
+                        <p><strong>Profesor:</strong> Ana López</p>
+                        <a href="#" class="btn btn-success mt-3">Sistemas Operativos</a>
+                    </div>
+                    <div class="materia-card text-center" style="width: 14rem;">
+                        <h3>Inglés IV</h3>
+                        <p><strong>Tipo:</strong> Virtual</p>
+                        <p><strong>Profesor:</strong> Carlos Gómez</p>
+                        <a href="#" class="btn btn-success mt-3">Inglés IV</a>
+                    </div>
+                    <div class="materia-card text-center" style="width: 14rem;">
+                        <h3>Electrónica Digital</h3>
+                        <p><strong>Tipo:</strong> Virtual</p>
+                        <p><strong>Profesor:</strong> Laura González</p>
+                        <a href="#" class="btn btn-success mt-3">Electrónica Digital</a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 </html>
