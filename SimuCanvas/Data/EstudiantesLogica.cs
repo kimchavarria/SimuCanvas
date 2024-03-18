@@ -65,6 +65,15 @@ namespace SimuCanvas.Data
                 return false;
             }
 
+            // Verificar la capacidad máxima del curso
+            int estudiantesRegistrados = ObtenerNumeroEstudiantesRegistradosEnCurso(courseId);
+
+            if (estudiantesRegistrados >= course.MaxStudents)
+            {
+                // Si la capacidad máxima del curso ha sido alcanzada, no se puede registrar más estudiantes
+                return false;
+            }
+
             // Insertar el registro del estudiante en el curso en la base de datos
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -88,12 +97,31 @@ namespace SimuCanvas.Data
                 }
                 catch (SqlException ex)
                 {
-                    
                     Console.WriteLine("Error al intentar insertar el registro: " + ex.Message);
                     return false;
                 }
             }
         }
+
+
+
+        private int ObtenerNumeroEstudiantesRegistradosEnCurso(int courseId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM REGISTRO WHERE course_id = @courseId";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@courseId", courseId);
+
+                int count = (int)command.ExecuteScalar();
+
+                return count;
+            }
+        }
+
 
         public Usuario ObtenerUsuarioPorId(int userId)
         {
