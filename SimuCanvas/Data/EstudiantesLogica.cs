@@ -103,8 +103,6 @@ namespace SimuCanvas.Data
             }
         }
 
-
-
         private int ObtenerNumeroEstudiantesRegistradosEnCurso(int courseId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -121,7 +119,6 @@ namespace SimuCanvas.Data
                 return count;
             }
         }
-
 
         public Usuario ObtenerUsuarioPorId(int userId)
         {
@@ -159,7 +156,33 @@ namespace SimuCanvas.Data
             return usuario;
         }
 
-        public Course ObtenerCursoPorId(int courseId)
+        public string ObtenerNombreProfesor(int facultyId)
+        {
+            string nombreProfesor = "";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT name FROM USUARIOS WHERE id_usuario = @facultyId";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@facultyId", facultyId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        nombreProfesor = reader.GetString(0);
+                    }
+                }
+            }
+
+            return nombreProfesor;
+        }
+    
+
+    public Course ObtenerCursoPorId(int courseId)
         {
             Course curso = null;
 
@@ -243,6 +266,45 @@ namespace SimuCanvas.Data
             }
 
             return estudiantesRegistrados;
+        }
+        public List<Course> ObtenerCursosMatriculados(int estudianteId)
+        {
+            List<Course> cursosMatriculados = new List<Course>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = @"SELECT c.course_id, c.faculty_id, c.Title, c.Description, c.Credits, c.InitialDate, c.FinalDate, c.MaxStudents 
+                                 FROM COURSE c 
+                                 JOIN REGISTRO r ON c.course_id = r.course_id 
+                                 WHERE r.student_id = @estudianteId";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@estudianteId", estudianteId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var curso = new Course
+                        {
+                            CourseId = reader.GetInt32(0),
+                            FacultyId = reader.GetInt32(1),
+                            Title = reader.GetString(2),
+                            Description = reader.GetString(3),
+                            Credits = reader.GetInt32(4),
+                            InitialDate = reader.GetDateTime(5),
+                            FinalDate = reader.GetDateTime(6),
+                            MaxStudents = reader.GetInt32(7)
+                        };
+
+                        cursosMatriculados.Add(curso);
+                    }
+                }
+            }
+
+            return cursosMatriculados;
         }
     }
 }

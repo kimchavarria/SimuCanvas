@@ -8,10 +8,12 @@ namespace SimuCanvas.Controllers
     public class EstudianteController : Controller
     {
         private readonly PerfilLogica _dbUsuario;
+        private readonly EstudiantesLogica _estudiantesLogica;
 
-        public EstudianteController(PerfilLogica dbUsuario)
+        public EstudianteController(PerfilLogica dbUsuario, EstudiantesLogica estudiantesLogica)
         {
             _dbUsuario = dbUsuario;
+            _estudiantesLogica = estudiantesLogica;
         }
 
         public IActionResult PerfilEstudiante()
@@ -36,12 +38,24 @@ namespace SimuCanvas.Controllers
 
         public IActionResult CursosEstudiante()
         {
-            return View();
+            // Obtener el usuario actualmente autenticado
+            var usuario = ObtenerUsuarioActual();
+
+            // Obtener los cursos en los que está matriculado el estudiante
+            var cursosMatriculados = _estudiantesLogica.ObtenerCursosMatriculados(usuario.IdUsuario);
+
+            ViewData["EstudiantesLogica"] = _estudiantesLogica;
+
+            return View(cursosMatriculados);
         }
 
-        public IActionResult detalleCursos()
+        public IActionResult DetalleCursos(int id)
         {
-            return View();
+            // Aquí podrías implementar la lógica para obtener los detalles del curso con el id proporcionado
+            var curso = _estudiantesLogica.ObtenerCursoPorId(id);
+            ViewData["EstudiantesLogica"] = _estudiantesLogica;
+
+            return View(curso);
         }
 
 

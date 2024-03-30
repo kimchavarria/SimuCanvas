@@ -33,13 +33,13 @@
 
 /* Estilos para la scrollbox */
 .scroll-box {
-    max-height: 600px; /* Altura máxima */
+    max-height: 450px; /* Altura máxima */
     overflow-y: auto; /* poner el desplazamiento vertical */
 }
 
 .materia-card {
-    width: 200px;
-    height: 250px;
+    width: 280px;
+    height: auto;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;

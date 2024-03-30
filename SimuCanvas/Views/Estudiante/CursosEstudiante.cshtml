@@ -1,20 +1,16 @@
-﻿@{
-    ViewData["Title"] = "CursosEstudiante";
+﻿@using SimuCanvas.Data
+
+@model List<SimuCanvas.Models.Course>
+
+@{
+    ViewData["Title"] = "Cursos del Estudiante";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Cursos Estudiante</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/CursosEstudianteSheet.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
 
-<body>
     <div class="container">
         <div class="row">
             <div class="col-md-3 left-container">
@@ -47,41 +43,24 @@
 
                     <div class="scroll-box mt-5">
                         <!-- Your materia cards here -->
-                        <div class="materia-card text-center" style="width: 14rem;">
-                            <h3>Programación I</h3>
-                            <p><strong>Tipo:</strong> Virtual</p>
-                            <p><strong>Profesor:</strong> Juan Pérez</p>
-                            <a href="#" class="btn btn-success mt-3">Programacion I</a>
+                    @foreach (var curso in Model)
+                    {
+                        <div class="materia-card text-center">
+                            <h3>@curso.Title</h3>
+                            <p><strong>Descripción:</strong> @curso.Description</p>
+                            <p><strong>Créditos:</strong> @curso.Credits</p>
+                            <p><strong>Fecha Inicial:</strong> @curso.InitialDate.ToShortDateString()</p>
+                            <p><strong>Fecha Final:</strong> @curso.FinalDate.ToShortDateString()</p>
+                            <p><strong>Profesor:</strong> @{
+                                    var estudiantesLogica = ViewData["EstudiantesLogica"] as EstudiantesLogica;
+                                } @estudiantesLogica.ObtenerNombreProfesor(curso.FacultyId)</p>
+                            <a href="@Url.Action("DetalleCursos", "Estudiante", new { id = curso.CourseId })" class="btn btn-success mt-3">Ver Detalles</a>
                         </div>
-                        <div class="materia-card text-center" style="width: 14rem;">
-                            <h3>Sistemas Operativos</h3>
-                            <p><strong>Tipo:</strong> Presencial</p>
-                            <p><strong>Profesor:</strong> Ana López</p>
-                            <a href="#" class="btn btn-success mt-3">Sistemas Operativos</a>
-                        </div>
-                        <div class="materia-card text-center" style="width: 14rem;">
-                            <h3>Ingles IV</h3>
-                            <p><strong>Tipo:</strong> Virtual</p>
-                            <p><strong>Profesor:</strong> Carlos Gómez</p>
-                            <a href="#" class="btn btn-success mt-3">Ingles IV</a>
-                        </div>
-                        <div class="materia-card text-center" style="width: 14rem;">
-                            <h3>Electronica Digital</h3>
-                            <p><strong>Tipo:</strong> Virtual</p>
-                            <p><strong>Profesor:</strong> Laura González</p>
-                            <a href="#" class="btn btn-success mt-3">Electronica Digital</a>
-                        </div>
+                    }
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer class="footer mt-5">
-        <div class="container text-center">
-            <p>All rights reserved &copy; 2024</p>
-        </div>
-    </footer>
-</body>
-
-</html>
