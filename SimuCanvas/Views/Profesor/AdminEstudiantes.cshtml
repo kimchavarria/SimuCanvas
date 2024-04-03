@@ -6,204 +6,217 @@
 
 <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AdminEstudiantes</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/AdminEstudianteSheet.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<meta name="viewport" content="width=device-width" />
+<title>Admin Estudiantes</title>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/AdminEstudianteSheet.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-</head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
-        <a class="navbar-brand">
-            <img src="~/Images/ulacitlogo.png" class="img-fluid mb-2" alt="ULACIT LOGO">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <div class="home-btn">
-                        <a href="@Url.Action("Profesor", "Home")" type="button" class="btn btn-secondary">
-                            <i class="fas fa-home"></i> Home
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="perfil-btn">
-                        <a href="@Url.Action("PerfilProfesor", "Profesor")" type="button" class="btn btn-secondary">
-                            <i class="fas fa-user"></i> Perfil
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="cursos-btn">
-                        <a href="@Url.Action("CursosProfesor", "Profesor")" type="button" class="btn btn-secondary">
-                            <i class="fas fa-book"></i> Cursos
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="signout-btn">
-                        <form asp-action="SignOut" asp-controller="Profesor" method="post">
-                            <button type="submit" class="btn btn-dark">
-                                <i class="fas fa-sign-out-alt"></i> Sign Out
-                            </button>
-                        </form>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
+    <a class="navbar-brand">
+        <img src="~/Images/ulacitlogo.png" class="img-fluid mb-2" alt="ULACIT LOGO">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <div class="home-btn">
+                    <a href="@Url.Action("Profesor", "Home")" type="button" class="btn btn-secondary">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="perfil-btn">
+                    <a href="@Url.Action("PerfilProfesor", "Profesor")" type="button" class="btn btn-secondary">
+                        <i class="fas fa-user"></i> Perfil
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="cursos-btn">
+                    <a href="@Url.Action("CursosProfesor", "Profesor")" type="button" class="btn btn-secondary">
+                        <i class="fas fa-book"></i> Cursos
+                    </a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="signout-btn">
+                    <form asp-action="SignOut" asp-controller="Profesor" method="post">
+                        <button type="submit" class="btn btn-dark">
+                            <i class="fas fa-sign-out-alt"></i> Sign Out
+                        </button>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
 
-    <div class="row main-content">
-        <div class="col-md-6">
-            <h1>Estudiantes</h1>
-            <div class="table-container">
-                <table id="studentTable">
-                    <thead>
+<div class="row main-content">
+    <div class="col-md-6">
+        <h1>Estudiantes</h1>
+        <div class="table-container">
+            <table id="studentTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Completo</th>
+                        <th>Correo electrónico</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model)
+                    {
                         <tr>
-                            <th>ID</th>
-                            <th>Nombre Completo</th>
-                            <th>Correo electrónico</th>
+                            <td>@student.IdUsuario</td>
+                            <td>@student.Name</td>
+                            <td>@student.Email</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var student in Model)
-                        {
-                            <tr>
-                                <td>@student.IdUsuario</td>
-                                <td>@student.Name</td>
-                                <td>@student.Email</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <h1>Estudiantes Registrados</h1>
-            <div class="table-containerr">
-                <table id="registroTable">
-                    <thead>
-                        <tr>
-                            <th>ID Estudiante</th>
-                            <th>ID Curso</th>
-                            <th>Nombre Curso</th>
-                            <th>Nombre Estudiante</th>
-                            <th>Correo Electrónico del Estudiante</th>
-                        </tr>
-                    </thead>
-                    <tbody id="registroTableBody">
-                        <!-- Aquí se mostrarán los datos de la tabla REGISTRO -->
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <h1 class="text-center">Registrar Estudiante a un Curso</h1>
-            <div class="text-center">
-                <form id="registrationForm" class="d-inline-block">
-                    <div id="responseMessage"></div>
-                    <div style="margin-bottom: 20px;"></div>
-                    <div class="form-group">
-                        <label for="student_id">ID del Estudiante:</label>
-                        <input type="number" id="student_id" name="student_id" class="form-control form-control-sm" required min="1" style="max-width: 150px;">
-                        <div class="invalid-feedback">
-                            Ingresa un ID válido del estudiante.
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="course_id">ID del Curso:</label>
-                        <input type="number" id="course_id" name="course_id" class="form-control form-control-sm" required min="1" style="max-width: 150px;">
-                        <div class="invalid-feedback">
-                            Ingresa un ID válido del curso.
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Registrar</button>
-                </form>
-            </div>
+    <div class="col-md-6">
+        <h1>Estudiantes Registrados</h1>
+        <div class="table-containerr">
+            <table id="registroTable">
+                <thead>
+                    <tr>
+                        <th>ID Estudiante</th>
+                        <th>ID Curso</th>
+                        <th>Nombre Curso</th>
+                        <th>Nombre Estudiante</th>
+                        <th>Correo Electrónico del Estudiante</th>
+                    </tr>
+                </thead>
+                <tbody id="registroTableBody">
+                    <!-- Aquí se mostrarán los datos de la tabla REGISTRO -->
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 
-    <footer class="footer mt-5">
-        <div class="container text-center">
-            <p>All rights reserved &copy; 2024</p>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h1 class="text-center">Registrar Estudiante a un Curso</h1>
+        <div class="text-center">
+            <form id="registrationForm" class="d-inline-block">
+                <div id="responseMessage"></div>
+                <div style="margin-bottom: 20px;"></div>
+                <div class="form-group">
+                    <label for="student_id">ID del Estudiante:</label>
+                    <input type="number" id="student_id" name="student_id" class="form-control form-control-sm" required min="1" style="max-width: 150px;">
+                    <div class="invalid-feedback">
+                        Ingresa un ID válido del estudiante.
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="course_id">ID del Curso:</label>
+                    <input type="number" id="course_id" name="course_id" class="form-control form-control-sm" required min="1" style="max-width: 150px;">
+                    <div class="invalid-feedback">
+                        Ingresa un ID válido del curso.
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
         </div>
-    </footer>
+    </div>
+</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
 
-        $(document).ready(function () {
-            // Función para cargar los estudiantes registrados al cargar la página
-            cargarEstudiantesRegistrados();
+<footer class="footer mt-5">
+    <div class="container text-center">
+        <p>All rights reserved &copy; 2024</p>
+    </div>
+</footer>
 
-            // Función para cargar los estudiantes registrados
-            function cargarEstudiantesRegistrados() {
-                $.ajax({
-                    type: 'GET',
-                    url: '@Url.Action("ObtenerEstudiantesRegistrados", "Profesor")',
-                    success: function (data) {
-                        mostrarEstudiantesRegistrados(data);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
 
-            // Función para mostrar los estudiantes registrados en la tabla
-            function mostrarEstudiantesRegistrados(estudiantes) {
-                $('#registroTableBody').empty(); // Limpiar la tabla antes de mostrar los datos
+    $(document).ready(function () {
+        // Función para cargar los estudiantes registrados al cargar la página
+        cargarEstudiantesRegistrados();
 
-                // Iterar sobre cada estudiante y agregar una fila a la tabla
-                $.each(estudiantes, function (index, estudiante) {
-                    var row = '<tr>' +
-                        '<td>' + estudiante.studentId + '</td>' +
-                        '<td>' + estudiante.courseId + '</td>' +
-                        '<td>' + estudiante.courseName + '</td>' +
-                        '<td>' + estudiante.studentName + '</td>' +
-                        '<td>' + estudiante.studentEmail + '</td>' +
-                        '</tr>';
-                    $('#registroTableBody').append(row);
-                });
-            }
-
-            // Función para manejar la actualización de la tabla cuando se realiza un nuevo registro
-            $('#registrationForm').submit(function (e) {
-                e.preventDefault();
-
-                var studentId = $('#student_id').val();
-                var courseId = $('#course_id').val();
-
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("RegistrarEstudianteACurso", "Profesor")',
-                    data: { student_id: studentId, course_id: courseId },
-                    success: function (response) {
-                        $('#responseMessage').html('<div class="alert alert-success" role="alert">' + response + '</div>');
-                        // Actualizar la tabla de estudiantes registrados después de realizar el registro
-                        cargarEstudiantesRegistrados();
-                    },
-                    error: function (xhr, status, error) {
-                        $('#responseMessage').html('<div class="alert alert-danger" role="alert">' + xhr.responseText + '</div>');
-                    }
-                });
+        // Función para cargar los estudiantes registrados
+        function cargarEstudiantesRegistrados() {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("ObtenerEstudiantesRegistrados", "Profesor")',
+                success: function (data) {
+                    mostrarEstudiantesRegistrados(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
             });
+        }
 
-            // Función para cargar los estudiantes registrados al cargar la página
-            cargarEstudiantesRegistrados();
+        // Función para mostrar los estudiantes registrados en la tabla
+        function mostrarEstudiantesRegistrados(estudiantes) {
+            $('#registroTableBody').empty(); // Limpiar la tabla antes de mostrar los datos
+
+            // Iterar sobre cada estudiante y agregar una fila a la tabla
+            $.each(estudiantes, function (index, estudiante) {
+                var row = '<tr>' +
+                    '<td>' + estudiante.studentId + '</td>' +
+                    '<td>' + estudiante.courseId + '</td>' +
+                    '<td>' + estudiante.courseName + '</td>' +
+                    '<td>' + estudiante.studentName + '</td>' +
+                    '<td>' + estudiante.studentEmail + '</td>' +
+                    '</tr>';
+                $('#registroTableBody').append(row);
+            });
+        }
+
+        // Función para manejar la actualización de la tabla cuando se realiza un nuevo registro
+        $('#registrationForm').submit(function (e) {
+            e.preventDefault();
+
+            var studentId = $('#student_id').val();
+            var courseId = $('#course_id').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("RegistrarEstudianteACurso", "Profesor")',
+                data: { student_id: studentId, course_id: courseId },
+                success: function (response) {
+                    $('#responseMessage').html('<div class="alert alert-success" role="alert">' + response + '</div>');
+                    // Actualizar la tabla de estudiantes registrados después de realizar el registro
+                    cargarEstudiantesRegistrados();
+                },
+                error: function (xhr, status, error) {
+                    $('#responseMessage').html('<div class="alert alert-danger" role="alert">' + xhr.responseText + '</div>');
+                }
+            });
         });
-    </script>
 
-</body>
-</html>
+        // Función para cargar los estudiantes registrados al cargar la página
+        cargarEstudiantesRegistrados();
+    });
+
+    function eliminarEstudiante(studentId, courseId) {
+        if (confirm("¿Estás seguro de que deseas eliminar este estudiante del curso?")) {
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("EliminarEstudianteDeCurso", "Profesor")',
+                data: { student_id: studentId, course_id: courseId },
+                success: function (response) {
+                    // Recargar la lista de estudiantes registrados
+                    cargarEstudiantesRegistrados();
+                    alert(response); // Mostrar mensaje de éxito
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText); // Mostrar mensaje de error
+                }
+            });
+        }
+    }
+</script>
+

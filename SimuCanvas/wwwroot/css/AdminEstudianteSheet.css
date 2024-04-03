@@ -1,13 +1,13 @@
-﻿body {
+﻿﻿body {
     padding-top: 70px;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 .main-content {
     margin-top: 80px;
     display: flex;
     justify-content: space-between;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 .navbar-brand img {
@@ -35,6 +35,7 @@ h1 {
     margin: 10px auto;
     padding-left: 10px; /* Ajusta según sea necesario */
 }
+
 .table-containerr {
     overflow-y: auto;
     max-height: 280px;
@@ -48,7 +49,7 @@ h1 {
 }
 
 table {
-   width: 100%;
+    width: 100%;
     border-collapse: collapse;
     //margin-bottom: 20px;
     text-align: center;

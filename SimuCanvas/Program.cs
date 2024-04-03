@@ -8,6 +8,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<PerfilLogica>();
 builder.Services.AddSingleton<LoginLogica>();
 builder.Services.AddScoped<EstudiantesLogica>();
+builder.Services.AddScoped<ProfesorLogica>();
 
 
 // Add services to the container.

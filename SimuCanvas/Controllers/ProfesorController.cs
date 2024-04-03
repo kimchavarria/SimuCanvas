@@ -42,6 +42,25 @@ namespace SimuCanvas.Controllers
         {
             return View();
         }
+        public IActionResult DetalleCursos()
+        {
+            return View();
+        }
+
+        public IActionResult AsistenciaProfesor()
+        {
+            return View();
+        }
+
+        public IActionResult AsignaturasProfesor()
+        {
+            return View();
+        }
+
+        public IActionResult GruposProfesor()
+        {
+            return View();
+        }
 
         public IActionResult AdminEstudiantes()
         {

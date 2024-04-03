@@ -306,5 +306,31 @@ namespace SimuCanvas.Data
 
             return cursosMatriculados;
         }
+        public bool EliminarEstudianteDeCurso(int studentId, int courseId)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = "DELETE FROM REGISTRO WHERE student_id = @studentId AND course_id = @courseId";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@studentId", studentId);
+                command.Parameters.AddWithValue("@courseId", courseId);
+
+                try
+                {
+                    int rowsAffected = command.ExecuteNonQuery();
+
+                    return rowsAffected > 0;
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine("Error al intentar eliminar al estudiante del curso: " + ex.Message);
+                    return false;
+                }
+            }
+        }
+
     }
 }

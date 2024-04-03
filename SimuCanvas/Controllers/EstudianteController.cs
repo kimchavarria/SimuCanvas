@@ -18,19 +18,19 @@ namespace SimuCanvas.Controllers
 
         public IActionResult PerfilEstudiante()
         {
-            // Obtener el usuario actualmente autenticado
+            // obtenemos el usuario actualmente autenticado
             var usuario = ObtenerUsuarioActual();
             return View(usuario);
         }
 
         private Usuario ObtenerUsuarioActual()
         {
-            // Obteniendo el usuario actualmente autenticado
+            // obtenemos el usuario actualmente autenticado
             var claimsIdentity = (System.Security.Claims.ClaimsIdentity)User.Identity;
             var nameClaim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.Name);
             var emailClaim = claimsIdentity.FindFirst("Correo");
 
-            // Consultar la base de datos para obtener el usuario completo
+            // se consulta la base de datos para obtener el usuario completo
             var usuario = _dbUsuario.ObtenerUsuarioPorEmail(emailClaim.Value);
 
             return usuario;
@@ -38,10 +38,10 @@ namespace SimuCanvas.Controllers
 
         public IActionResult CursosEstudiante()
         {
-            // Obtener el usuario actualmente autenticado
+            // obtiene el usuario actualmente autenticado
             var usuario = ObtenerUsuarioActual();
 
-            // Obtener los cursos en los que está matriculado el estudiante
+            // obtiene los cursos en los que está matriculado el estudiante
             var cursosMatriculados = _estudiantesLogica.ObtenerCursosMatriculados(usuario.IdUsuario);
 
             ViewData["EstudiantesLogica"] = _estudiantesLogica;
@@ -51,13 +51,25 @@ namespace SimuCanvas.Controllers
 
         public IActionResult DetalleCursos(int id)
         {
-            // Aquí podrías implementar la lógica para obtener los detalles del curso con el id proporcionado
             var curso = _estudiantesLogica.ObtenerCursoPorId(id);
             ViewData["EstudiantesLogica"] = _estudiantesLogica;
 
             return View(curso);
         }
+        public IActionResult AsistenciaEstudiante()
+        {
+            return View();
+        }
 
+        public IActionResult AsignaturasEstudiante()
+        {
+            return View();
+        }
+
+        public IActionResult GruposEstudiante()
+        {
+            return View();
+        }
 
         public async Task<IActionResult> SignOut()
         {
