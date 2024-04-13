@@ -16,7 +16,6 @@ password VARCHAR(50) NOT NULL,
 role VARCHAR(50) NOT NULL
 )
 
-
 CREATE TABLE COURSE (
     course_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     faculty_id INT NOT NULL,
@@ -28,7 +27,6 @@ CREATE TABLE COURSE (
     maxStudents INT NOT NULL
 );
 
--- TABLE REGISTRO
 CREATE TABLE REGISTRO (
     registro_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     student_id INT NOT NULL,
@@ -45,7 +43,6 @@ ALTER TABLE REGISTRO
 ADD CONSTRAINT UC_REGISTRO UNIQUE (student_id, course_id),
 CONSTRAINT FK_REGISTRO_COURSE FOREIGN KEY (course_id) REFERENCES COURSE(course_id);
 
--TABLE ATTENDANCE
 CREATE TABLE Attendance (
     attendance_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
     student_id INT NOT NULL,
@@ -55,3 +52,19 @@ CREATE TABLE Attendance (
     FOREIGN KEY (student_id) REFERENCES USUARIOS(id_usuario),
     FOREIGN KEY (course_id) REFERENCES COURSE(course_id)
 );
+
+CREATE TABLE GROUPS (
+    group_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    course_id INT NOT NULL,
+    group_name VARCHAR(100) NOT NULL,
+    FOREIGN KEY (course_id) REFERENCES COURSE(course_id)
+);
+
+CREATE TABLE GROUPMEMBERS (
+    groupmembers_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    student_id INT NOT NULL,
+    group_id INT NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES USUARIOS(id_usuario),
+    FOREIGN KEY (group_id) REFERENCES Groups(group_id)
+);
+

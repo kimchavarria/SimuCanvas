@@ -40,6 +40,7 @@ namespace SimuCanvas.Controllers
 
             return usuario;
         }
+
         public IActionResult CursosProfesor()
         {
             var usuario = _profesorLogica.ObtenerUsuarioActual(HttpContext);
@@ -78,26 +79,31 @@ namespace SimuCanvas.Controllers
         public IActionResult AsistenciaProfesor(int courseId)
         {
             var estudiantes = _profesorLogica.ObtenerEstudiantesRegistradosEnCurso(courseId);
-            Console.WriteLine($"Number of students retrieved: {estudiantes.Count}"); // Add this line for debugging
             return View(estudiantes);
         }
 
-
-
-
         [HttpPost]
-        public IActionResult AsistenciaProfesor(int courseId, List<Usuario> estudiantes)
+        public IActionResult AsistenciaProfesor(int courseId, Dictionary<int, bool> Estudiantes)
         {
-            foreach (var estudiante in estudiantes)
+            // Get an instance of ProfesorLogica
+            ProfesorLogica profesorLogica = new ProfesorLogica(_dbUsuario);
+
+            foreach (var kvp in Estudiantes)
             {
-                bool isPresent = Request.Form["Estudiantes[" + estudiante.IdUsuario + "].IsPresent"] == "true";
-                // Guardar el estado de asistencia en la base de datos
-                _profesorLogica.GuardarAsistencia(estudiante.IdUsuario, courseId, isPresent);
+                int studentId = kvp.Key;
+                bool isPresent = kvp.Value;
+
+                // Call the InsertAttendance method from ProfesorLogica
+                profesorLogica.InsertAttendance(studentId, courseId, DateTime.Today, isPresent);
             }
 
-            // Redirigir a alguna página de confirmación o de vuelta a la lista de cursos
-            return RedirectToAction("Index", "Home");
+            // Set the TempData to indicate that attendance was saved successfully
+            TempData["AttendanceSaved"] = true;
+
+            // Redirect to action instead of returning view directly
+            return RedirectToAction("AsistenciaProfesor", new { courseId = courseId });
         }
+
 
 
         public IActionResult AsignaturasProfesor()
@@ -133,7 +139,6 @@ namespace SimuCanvas.Controllers
                 return BadRequest("El curso no existe.");
             }
 
-            // Realizar el registro del estudiante al curso
             bool registroExitoso = _estudiantesLogica.RegistrarEstudianteACurso(student_id, course_id);
 
             if (registroExitoso)
@@ -145,6 +150,7 @@ namespace SimuCanvas.Controllers
                 return BadRequest("El estudiante ya está registrado en este curso.");
             }
         }
+
         [HttpGet]
         public IActionResult ObtenerEstudiantesRegistrados()
         {

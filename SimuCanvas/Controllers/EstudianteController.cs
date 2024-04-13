@@ -57,9 +57,16 @@ namespace SimuCanvas.Controllers
 
             return View(curso);
         }
-        public IActionResult AsistenciaEstudiante()
+        public IActionResult AsistenciaEstudiante(int courseId)
         {
-            return View();
+            // Get student ID from current logged in user
+            var studentId = ObtenerUsuarioActual().IdUsuario;
+
+            // Get attendance records for the student in the specified course
+            var attendanceRecords = _estudiantesLogica.ObtenerAsistenciaEstudianteEnCurso(studentId, courseId);
+
+            // Pass the attendance records to the view
+            return View(attendanceRecords);
         }
 
         public IActionResult AsignaturasEstudiante()

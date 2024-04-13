@@ -41,10 +41,8 @@ namespace SimuCanvas.Data
                     }
                 }
             }
-
             return usuarios;
         }
-
 
         public bool RegistrarEstudianteACurso(int studentId, int courseId)
         {
@@ -154,7 +152,6 @@ namespace SimuCanvas.Data
                     }
                 }
             }
-
             return usuario;
         }
 
@@ -182,9 +179,8 @@ namespace SimuCanvas.Data
 
             return nombreProfesor;
         }
-    
 
-    public Course ObtenerCursoPorId(int courseId)
+        public Course ObtenerCursoPorId(int courseId)
         {
             Course curso = null;
 
@@ -220,6 +216,7 @@ namespace SimuCanvas.Data
 
             return curso;
         }
+
         private bool VerificarEstudianteRegistradoEnCurso(int studentId, int courseId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -237,6 +234,7 @@ namespace SimuCanvas.Data
                 return count > 0;
             }
         }
+
         public List<Registro> ObtenerEstudiantesRegistrados()
         {
             List<Registro> estudiantesRegistrados = new List<Registro>();
@@ -266,9 +264,9 @@ namespace SimuCanvas.Data
                     }
                 }
             }
-
             return estudiantesRegistrados;
         }
+
         public List<Course> ObtenerCursosMatriculados(int estudianteId)
         {
             List<Course> cursosMatriculados = new List<Course>();
@@ -305,9 +303,9 @@ namespace SimuCanvas.Data
                     }
                 }
             }
-
             return cursosMatriculados;
         }
+
         public bool EliminarEstudianteDeCurso(int studentId, int courseId)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
@@ -332,6 +330,38 @@ namespace SimuCanvas.Data
                     return false;
                 }
             }
+
+        }
+        public List<Attendance> ObtenerAsistenciaEstudianteEnCurso(int studentId, int courseId)
+        {
+            List<Attendance> attendanceRecords = new List<Attendance>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT attendance_date, is_present FROM Attendance WHERE student_id = @studentId AND course_id = @courseId";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@studentId", studentId);
+                command.Parameters.AddWithValue("@courseId", courseId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var attendanceRecord = new Attendance
+                        {
+                            AttendanceDate = reader.GetDateTime(0),
+                            IsPresent = reader.GetBoolean(1)
+                        };
+
+                        attendanceRecords.Add(attendanceRecord);
+                    }
+                }
+            }
+
+            return attendanceRecords;
         }
 
     }

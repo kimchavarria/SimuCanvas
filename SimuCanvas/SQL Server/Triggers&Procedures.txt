@@ -19,8 +19,6 @@ BEGIN
     END
 END;
 
-
-
 GO
 -- Trigger para asegurar que solo estudiantes pueden ser referenciados en registro
 CREATE TRIGGER EnforceStudentRole
@@ -40,8 +38,8 @@ BEGIN
     END
 END;
 
-
--procedure to get the list of students enrolled in a specific course
+GO
+-Procedure to get the list of students enrolled in a specific course
 CREATE PROCEDURE GetStudentsByCourseId
     @CourseId INT
 AS
@@ -50,3 +48,19 @@ BEGIN
     FROM REGISTRO
     WHERE course_id = @CourseId;
 END
+
+GO
+--procedure for inserting in the attendance table 
+CREATE PROCEDURE InsertAttendance
+    @StudentId INT,
+    @CourseId INT,
+    @AttendanceDate DATE,
+    @IsPresent BIT
+AS
+BEGIN
+    INSERT INTO Attendance (student_id, course_id, attendance_date, is_present)
+    VALUES (@StudentId, @CourseId, @AttendanceDate, @IsPresent)
+END
+
+GO
+

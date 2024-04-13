@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using SimuCanvas.Data;
+﻿using SimuCanvas.Data;
 using SimuCanvas.Models;
 using System.Data;
 using System.Data.SqlClient;
@@ -201,24 +200,33 @@ namespace SimuCanvas.Logic
             return estudiantesRegistrados;
         }
 
-
-        public void GuardarAsistencia(int studentId, int courseId, bool isPresent)
+        public void InsertAttendance(int studentId, int courseId, DateTime attendanceDate, bool isPresent)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
-                string query = @"INSERT INTO Attendance (student_id, course_id, attendance_date, is_present)
-                                 VALUES (@studentId, @courseId, @attendanceDate, @isPresent)";
+                // Define the stored procedure name
+                string storedProcedure = "InsertAttendance";
 
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@studentId", studentId);
-                command.Parameters.AddWithValue("@courseId", courseId);
-                command.Parameters.AddWithValue("@attendanceDate", DateTime.Today); // Fecha actual
-                command.Parameters.AddWithValue("@isPresent", isPresent);
+                // Create a SqlCommand object for executing the stored procedure
+                using (SqlCommand command = new SqlCommand(storedProcedure, connection))
+                {
+                    // Specify that it's a stored procedure
+                    command.CommandType = CommandType.StoredProcedure;
 
-                command.ExecuteNonQuery();
+                    // Add parameters required by the stored procedure
+                    command.Parameters.AddWithValue("@StudentId", studentId);
+                    command.Parameters.AddWithValue("@CourseId", courseId);
+                    command.Parameters.AddWithValue("@AttendanceDate", attendanceDate);
+                    command.Parameters.AddWithValue("@IsPresent", isPresent);
+
+                    // Execute the stored procedure
+                    command.ExecuteNonQuery();
+                }
             }
         }
+
+
     }
 }

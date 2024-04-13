@@ -1,15 +1,21 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@model List<SimuCanvas.Models.Attendance>
 
-<!DOCTYPE html>
+<h2>Registro de Asistencia</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AsistenciaEstudiante</title>
-</head>
-<body>
-</body>
-</html>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Asistencia</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.AttendanceDate.ToShortDateString()</td>
+                <td>@(record.IsPresent ? "Presente" : "Ausente")</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -2,7 +2,7 @@
 @using SimuCanvas.Data
 
 @{
-    ViewData["Title"] = "Detalle del Curso";
+    ViewData["Title"] = "Detalle del Curso del Estudiante";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     var _estudiantesLogica = ViewData["EstudiantesLogica"] as EstudiantesLogica;
@@ -69,9 +69,9 @@
                     </div>
                     <div class="content-block">
                         <h3 class="section-title">Herramientas</h3>
-                        <a href="#" class="btn btn-primary">Calificaciones</a>
+                        <a href="@Url.Action("AsistenciaEstudiante", "Estudiante", new { courseId = Model.CourseId })" class="btn btn-primary">Asistencia</a>
+                        <a href="#" class="btn btn-primary">Asignaturas</a>
                         <a href="#" class="btn btn-primary">Grupos</a>
-                        <a href="#" class="btn btn-primary">Asistencia</a>
                     </div>
                 </div>
             </div>

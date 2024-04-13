@@ -1,14 +1,14 @@
 ﻿@model List<SimuCanvas.Models.Registro>
 
 @{
-    ViewData["Title"] = "Marcar Asistencia";
+    ViewData["Title"] = "Asistencia";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Marcar Asistencia</h2>
+<h2>Asistencia</h2>
 
 <form asp-action="AsistenciaProfesor" method="post">
-    <input type="hidden" name="CourseId" value="@((Model.Count > 0) ? Model[0].CourseId : 0)" />
+    <input type="hidden" name="courseId" value="@((Model.Count > 0) ? Model[0].CourseId : 0)" />
 
     <table class="table">
         <thead>
@@ -23,8 +23,7 @@
                 <tr>
                     <td>@estudiante.StudentName - @estudiante.StudentEmail</td>
                     <td>
-                        <input type="checkbox" name="Estudiantes[@estudiante.StudentId].IsPresent" value="true" /> Presente
-                        <input type="hidden" name="Estudiantes[@estudiante.StudentId].StudentId" value="@estudiante.StudentId" /> <!-- Envía el ID del estudiante -->
+                        <input type="checkbox" name="Estudiantes[@estudiante.StudentId]" value="true" /> Presente
                     </td>
                 </tr>
             }
@@ -33,3 +32,12 @@
 
     <button type="submit" class="btn btn-primary">Guardar Asistencia</button>
 </form>
+
+@if (TempData["AttendanceSaved"] != null && (bool)TempData["AttendanceSaved"])
+{
+    <div class="alert alert-success mt-3" role="alert">
+        ¡La asistencia se guardó correctamente!
+    </div>
+    <a href="@Url.Action("DetalleCursos", "Profesor", new { courseId = Model[0].CourseId })" class="btn btn-primary mt-3">Volver a Detalle Cursos</a>
+}
+
