@@ -1,15 +1,69 @@
-﻿
+﻿@model SimuCanvas.Models.Course
+@using SimuCanvas.Data
+@using SimuCanvas.Models
+
 @{
-    Layout = null;
+    ViewData["Title"] = "Detalle del Curso Para El Profesor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/DetalleCursosProfesorSheet.css">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>DetalleCursos</title>
-</head>
-<body>
-</body>
-</html>
+<div class="container-fluid">
+    <div class="left-container">
+        <!-- Logo here -->
+        <img src="~/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+        <!-- Buttons on the left side -->
+        <a href="@Url.Action("PerfilProfesor", "Profesor")" class="btn btn-secondary btn-block">
+            <i class="fa fa-user"></i>
+            Perfil de Usuario
+        </a>
+        <a href="@Url.Action("CursosProfesor", "Profesor")" class="btn btn-secondary btn-block">
+            <i class="fas fa-book"></i>
+            Cursos
+        </a>
+        <form asp-action="SignOut" asp-controller="Profesor" method="post">
+            <button type="submit" class="btn btn-dark btn-block">
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+            </button>
+        </form>
+    </div>
+    <!-- Central Container -->
+    <div class="col-md-9 central-container">
+        <div class="card">
+            <div class="card-section">
+                <h1>@Model.Title</h1>
+                <div class="course-faculty">
+                    <img class="instructor-image" src="~/Images/profesor.jpeg" alt="Instructor's Placeholder Image">
+                    <div class="instructor-info">
+                        <p class="instructor-name">
+                            @ViewBag.ProfessorName
+                        </p>
+                        <p class="instructor-role">INSTRUCTOR</p>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-block">
+                        <h3 class="section-title">Course Information</h3>
+                        <p><strong>Descripción:</strong> @Model.Description</p>
+                        <p><strong>Créditos:</strong> @Model.Credits</p>
+                        <p><strong>Fecha Inicial:</strong> @Model.InitialDate.ToShortDateString()</p>
+                        <p><strong>Fecha Final:</strong> @Model.FinalDate.ToShortDateString()</p>
+                    </div>
+                    <div class="content-block">
+                        <h3 class="section-title">Herramientas</h3>
+                        <a href="@Url.Action("AsistenciaProfesor", "Profesor", new { courseId = Model.CourseId })" class="btn btn-primary">Asistencia</a>
+                        <a href="@Url.Action("AsignaturasProfesor", "Profesor", new { idCurso = Model.CourseId })" class="btn btn-primary">Asignaturas</a>
+                        <a href="@Url.Action("GruposProfesor", "Profesor", new { idCurso = Model.CourseId })" class="btn btn-primary">Grupos</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

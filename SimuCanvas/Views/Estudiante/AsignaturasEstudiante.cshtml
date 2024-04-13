@@ -1,15 +1,67 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AsignaturasEstudiante</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asignaturas Estudiante</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="AsignaturasEstudiante.css">
 </head>
-<body>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+    <div class="container-fluid">
+        <div class="left-container">
+            <img src="ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+            <a href="pagina.html" class="btn btn-secondary btn-block">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+            <a href="Perfil.html" class="btn btn-secondary btn-block">
+                <i class="fa fa-user"></i>
+                Perfil de Usuario
+            </a>
+            <a href="CursosEstudiante.html" class="btn btn-secondary btn-block">
+                <i class="fas fa-book"></i>
+                Cursos
+            </a>
+            <button class="btn btn-dark btn-block" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+            </button>
+        </div>
+        <div class="central-container">
+            <div class="card">
+                <div class="card-section">
+                    <h2 class="section-title">Asignaturas</h2>
+                    <div class="content-grid">
+                        <div class="content-block">
+                            <div class="details-actions">
+                                <div class="flex mb-4 items-center">
+                                    <div class="w-1/4 px-3 font-bold">Tarea</div>
+                                    <div class="w-1/4 px-3 font-bold">Fecha de entrega</div>
+                                    <div class="w-1/4 px-3 font-bold">Estado</div>
+                                    <div class="w-1/4 px-3 font-bold">Nota</div>
+                                    <div class="w-1/4 px-3 font-bold">Comentarios</div>
+                                </div>
+                                <div class="flex mb-4 items-center">
+                                    <div class="w-1/4 px-3">Tarea 2</div>
+                                    <div class="w-1/4 px-3">2024-04-15</div>
+                                    <div class="w-1/4 px-3">Completado</div>
+                                    <div class="w-1/4 px-3">85</div>
+                                    <div class="w-1/4 px-3">Buen trabajo</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
+

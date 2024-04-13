@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using SimuCanvas.Data;
+using SimuCanvas.Models;
 
 namespace SimuCanvas.Controllers
 {

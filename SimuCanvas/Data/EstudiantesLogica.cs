@@ -44,6 +44,8 @@ namespace SimuCanvas.Data
 
             return usuarios;
         }
+
+
         public bool RegistrarEstudianteACurso(int studentId, int courseId)
         {
             // Verificar si el estudiante ya está registrado en el curso

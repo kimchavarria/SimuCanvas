@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using SimuCanvas.Data;
+using SimuCanvas.Logic;
 using SimuCanvas.Models;
 
 namespace SimuCanvas.Controllers
@@ -10,11 +11,13 @@ namespace SimuCanvas.Controllers
     {
         private readonly PerfilLogica _dbUsuario;
         private readonly EstudiantesLogica _estudiantesLogica;
+        private readonly ProfesorLogica _profesorLogica;
 
-        public ProfesorController(PerfilLogica dbUsuario, EstudiantesLogica estudiantesLogica)
+        public ProfesorController(PerfilLogica dbUsuario, EstudiantesLogica estudiantesLogica, ProfesorLogica profesorLogica)
         {
             _dbUsuario = dbUsuario;
             _estudiantesLogica = estudiantesLogica;
+            _profesorLogica = profesorLogica;
         }
 
         [HttpGet]
@@ -37,20 +40,65 @@ namespace SimuCanvas.Controllers
 
             return usuario;
         }
-
         public IActionResult CursosProfesor()
         {
-            return View();
-        }
-        public IActionResult DetalleCursos()
-        {
+            var usuario = _profesorLogica.ObtenerUsuarioActual(HttpContext);
+            var cursos = _profesorLogica.ObtenerCursosPorProfesor(usuario.IdUsuario);
+            ViewBag.Cursos = cursos;
+
+            var professorName = _profesorLogica.ObtenerNombreProfesor(usuario.IdUsuario);
+
+            ViewBag.ProfessorName = professorName;
+
+            var cursosConEstudiantes = new List<(Course curso, int totalEstudiantes)>();
+
+            foreach (var curso in cursos)
+            {
+                int totalEstudiantes = _profesorLogica.ObtenerNumeroEstudiantesRegistradosEnCurso(curso.CourseId);
+                cursosConEstudiantes.Add((curso, totalEstudiantes));
+            }
+
+            ViewBag.CursosConEstudiantes = cursosConEstudiantes;
+
             return View();
         }
 
-        public IActionResult AsistenciaProfesor()
+        public IActionResult DetalleCursos(int courseId)
         {
-            return View();
+            var curso = _profesorLogica.ObtenerCursoPorId(courseId);
+
+            if (curso == null)
+            {
+                return NotFound();
+            }
+
+            return View(curso);
         }
+
+        public IActionResult AsistenciaProfesor(int courseId)
+        {
+            var estudiantes = _profesorLogica.ObtenerEstudiantesRegistradosEnCurso(courseId);
+            Console.WriteLine($"Number of students retrieved: {estudiantes.Count}"); // Add this line for debugging
+            return View(estudiantes);
+        }
+
+
+
+
+        [HttpPost]
+        public IActionResult AsistenciaProfesor(int courseId, List<Usuario> estudiantes)
+        {
+            foreach (var estudiante in estudiantes)
+            {
+                bool isPresent = Request.Form["Estudiantes[" + estudiante.IdUsuario + "].IsPresent"] == "true";
+                // Guardar el estado de asistencia en la base de datos
+                _profesorLogica.GuardarAsistencia(estudiante.IdUsuario, courseId, isPresent);
+            }
+
+            // Redirigir a alguna página de confirmación o de vuelta a la lista de cursos
+            return RedirectToAction("Index", "Home");
+        }
+
 
         public IActionResult AsignaturasProfesor()
         {

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SimuCanvas.Data;
+using SimuCanvas.Logic;
 using System.Net.Sockets;
 
 var builder = WebApplication.CreateBuilder(args);

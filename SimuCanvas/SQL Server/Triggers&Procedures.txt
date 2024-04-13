@@ -41,13 +41,12 @@ BEGIN
 END;
 
 
-
-
-
-
-
-
-
-
-
-
+-procedure to get the list of students enrolled in a specific course
+CREATE PROCEDURE GetStudentsByCourseId
+    @CourseId INT
+AS
+BEGIN
+    SELECT student_id, course_id, student_name, student_email, course_name
+    FROM REGISTRO
+    WHERE course_id = @CourseId;
+END

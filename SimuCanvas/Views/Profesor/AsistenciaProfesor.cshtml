@@ -1,15 +1,35 @@
-﻿
+﻿@model List<SimuCanvas.Models.Registro>
+
 @{
-    Layout = null;
+    ViewData["Title"] = "Marcar Asistencia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
+<h2>Marcar Asistencia</h2>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AsistenciaProfesor</title>
-</head>
-<body>
-</body>
-</html>
+<form asp-action="AsistenciaProfesor" method="post">
+    <input type="hidden" name="CourseId" value="@((Model.Count > 0) ? Model[0].CourseId : 0)" />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Estudiante</th>
+                <th>Asistencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var estudiante in Model)
+            {
+                <tr>
+                    <td>@estudiante.StudentName - @estudiante.StudentEmail</td>
+                    <td>
+                        <input type="checkbox" name="Estudiantes[@estudiante.StudentId].IsPresent" value="true" /> Presente
+                        <input type="hidden" name="Estudiantes[@estudiante.StudentId].StudentId" value="@estudiante.StudentId" /> <!-- Envía el ID del estudiante -->
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Guardar Asistencia</button>
+</form>

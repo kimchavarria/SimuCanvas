@@ -1,0 +1,132 @@
+﻿body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    background-color: #f7fafc;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.left-container {
+    background-color: #BF3131;
+    padding: 30px;
+}
+
+
+    .left-container a, .left-container button {
+        display: block;
+        background-color: #494848;
+        color: #f5f1f1;
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        text-align: left;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+        .left-container a:hover, .left-container button:hover {
+            background-color: #ebebeb;
+        }
+
+        .left-container a i, .left-container button i {
+            margin-right: 8px;
+        }
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .left-container {
+        width: 250px;
+        float: left;
+    }
+
+    .central-container {
+        margin-left: 250px;
+    }
+}
+
+.card {
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 16px;
+    border-radius: 4px;
+}
+
+.card-section {
+    padding: 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.course-faculty {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.instructor-image {
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    margin-right: 16px;
+}
+
+.instructor-info {
+    flex-grow: 1;
+}
+
+.instructor-name {
+    color: #2d3748;
+    margin: 0;
+    font-weight: bold;
+}
+
+.instructor-role {
+    color: #718096;
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.details-actions {
+    margin-bottom: 16px;
+}
+
+.section-title {
+    color: #2d3748;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.details-list {
+    color: #4a5568;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 0 16px 16px;
+}
+
+.content-block {
+    background-color: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    padding: 16px;
+}
+
+.content-text {
+    color: #718096;
+    font-size: 0.875rem; /* 14px */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 4px 0;
+    background-color: #ffffff;
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

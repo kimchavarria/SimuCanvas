@@ -1,4 +1,4 @@
-﻿﻿@{
+﻿@{
     ViewData["Title"] = "CursosProfesor";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -35,34 +35,31 @@
         </div>
         <div class="col-md-9">
             <div class="cursos-info">
-                <h2>Cursos Profesor</h2>
                 <div class="admin-btn">
                     <a href="@Url.Action("AdminEstudiantes", "Profesor")" type="button" class="btn btn-danger">Administración de Estudiantes</a>
                 </div>
-                <div class="materia-card text-center" style="width: 14rem;">
-                    <h3>Programación I</h3>
-                    <p><strong>Tipo:</strong> Virtual</p>
-                    <p><strong>Profesor:</strong> Juan Pérez</p>
-                    <a href="#" class="btn btn-success mt-3">Programacion I</a>
-                </div>
-                <div class="materia-card text-center" style="width: 14rem;">
-                    <h3>Sistemas Operativos</h3>
-                    <p><strong>Tipo:</strong> Presencial</p>
-                    <p><strong>Profesor:</strong> Ana López</p>
-                    <a href="#" class="btn btn-success mt-3">Sistemas Operativos</a>
-                </div>
-                <div class="materia-card text-center" style="width: 14rem;">
-                    <h3>Inglés IV</h3>
-                    <p><strong>Tipo:</strong> Virtual</p>
-                    <p><strong>Profesor:</strong> Carlos Gómez</p>
-                    <a href="#" class="btn btn-success mt-3">Inglés IV</a>
-                </div>
-                <div class="materia-card text-center" style="width: 14rem;">
-                    <h3>Electrónica Digital</h3>
-                    <p><strong>Tipo:</strong> Virtual</p>
-                    <p><strong>Profesor:</strong> Laura González</p>
-                    <a href="#" class="btn btn-success mt-3">Electrónica Digital</a>
-                </div>
+                <h2>Cursos Profesor</h2>
+                @foreach (var cursoInfo in ViewBag.CursosConEstudiantes)
+                {
+                    <div class="materia-card text-center">
+                        @if (cursoInfo.Item1 == null)
+                        {
+                            <p>Error: Curso not found.</p>
+                        }
+                        else
+                        {
+                            <h3>@(cursoInfo.Item1.Title)</h3>
+                            <p><strong>Descripción:</strong> @(cursoInfo.Item1.Description)</p>
+                            <p><strong>Profesor:</strong> @ViewBag.ProfessorName</p>
+                            <p><strong>Total Estudiantes:</strong> @(cursoInfo.Item2)/@(cursoInfo.Item1.MaxStudents)</p>
+                            <a href="@Url.Action("DetalleCursos", "Profesor", new { courseId = cursoInfo.Item1.CourseId })" class="btn btn-success mt-3">Ver detalles</a>
+
+                        }
+                    </div>
+                }
+
+
+
             </div>
         </div>
     </div>

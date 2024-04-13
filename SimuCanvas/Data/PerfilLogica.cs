@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using SimuCanvas.Models;
+using System.Data.SqlClient;
 
 namespace SimuCanvas.Data
 {
