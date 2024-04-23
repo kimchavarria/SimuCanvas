@@ -1,16 +1,190 @@
-﻿
+﻿@model List<Groups>
 @{
-    Layout = null;
+    int idCurso = (int)ViewBag.CourseId;
 }
 
-<!DOCTYPE html>
+<title>Grupos Profesor</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="~/css/GruposProfesorSheet.css">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>GruposProfesor</title>
-</head>
-<body>
-    <h1>groups</h1>
-</body>
-</html>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 left-container">
+            <img src="~/css/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+            <a href="@Url.Action("Profesor", "Home")" type="button" class="btn btn-secondary btn-block mb-2">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+            <a href="@Url.Action("PerfilProfesor", "Profesor")" class="btn btn-secondary btn-block">
+                <i class="fa fa-user"></i>
+                Perfil de Usuario
+            </a>
+            <a href="@Url.Action("CursosProfesor", "Profesor")" class="btn btn-secondary btn-block">
+                <i class="fas fa-book"></i>
+                Cursos
+            </a>
+            <form asp-action="SignOut" asp-controller="Profesor" method="post">
+                <button type="submit" class="btn btn-dark btn-block">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sign Out
+                </button>
+            </form>
+        </div>
+
+        <div class="col-md-9 central-container">
+            <div class="crear-grupos-section">
+                <h2>Crear Grupos</h2>
+                <form method="post" action="@Url.Action("CrearGrupo", "Profesor")">
+                    <div class="form-group">
+                        <input type="hidden" name="idCurso" value="@idCurso" />
+                        <input type="text" name="groupName" placeholder="Group Name" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </form>
+            </div>
+
+            <div class="grupos-section">
+                <h2>Grupos</h2>
+                <div class="scrollbox">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nombre del Grupo</th>
+                                <th>Miembros</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var group in Model)
+                            {
+                                <tr>
+                                    <td>@group.GroupName</td>
+                                    <td>
+                                        <ul>
+                                            @foreach (var member in group.Members)
+                                            {
+                                                <li>@member</li>
+                                            }
+                                        </ul>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 bottom-container">
+            <div class="estudiantes-section">
+                <div class="container">
+                    <h2>Estudiantes matriculados</h2>
+                    <div class="scrollbox">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Nombre del Estudiante</th>
+                                        <th scope="col">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var student in ViewBag.Students)
+                                    {
+                                        <tr>
+                                            <td>@student.StudentName</td>
+                                            <td>
+                                                <div class="form-row align-items-center">
+                                                    <div class="col-auto my-1">
+                                                        <select name="groupId" class="custom-select mr-sm-2">
+                                                            @foreach (var group in Model)
+                                                            {
+                                                                <option value="@group.GroupId">@group.GroupName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-auto my-1">
+                                                        <button type="button" class="btn btn-primary assign-student-btn" data-student-id="@student.StudentId">Asignar</button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-row align-items-center">
+                                                    <div class="col-auto my-1">
+                                                        <select name="groupId" class="custom-select mr-sm-2">
+                                                            @foreach (var group in Model)
+                                                            {
+                                                                <option value="@group.GroupId">@group.GroupName</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-auto my-1">
+                                                        <button type="button" class="btn btn-danger remove-student-btn" data-student-id="@student.StudentId">Remover</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.assign-student-btn').click(function () {
+                var studentId = $(this).data('student-id');
+                var groupId = $(this).closest('tr').find('select[name="groupId"]').val();
+                var courseId = @idCurso;
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AsignarEstudianteAGrupo", "Profesor")",
+                    data: { studentId: studentId, groupId: groupId, courseId: courseId },
+                    success: function (data) {
+                        if (data.success) {
+                            alert("Student assigned to group successfully!");
+                            location.reload(); // Recargar la página
+                        } else {
+                            alert("Failed to assign student to group.");
+                        }
+                    },
+                    error: function () {
+                        alert("Error occurred while processing the request.");
+                    }
+                });
+            });
+
+            $('.remove-student-btn').click(function () {
+                var studentId = $(this).data('student-id');
+                var groupId = $(this).closest('tr').find('select[name="groupId"]').val();
+                var courseId = @idCurso;
+
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoverEstudianteDeGrupo", "Profesor")",
+                    data: { studentId: studentId, groupId: groupId, courseId: courseId },
+                    success: function (data) {
+                        if (data.success) {
+                            alert("Student removed from group successfully!");
+                            location.reload(); // Recargar la página
+                        } else {
+                            alert("Failed to remove student from group.");
+                        }
+                    },
+                    error: function () {
+                        alert("Error occurred while processing the request.");
+                    }
+                });
+            });
+        });
+    </script>
+
+}

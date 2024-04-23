@@ -1,0 +1,94 @@
+﻿body {
+    font-family: 'Open Sans', Arial, sans-serif;
+    background-color: #f7fafc;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body takes up at least the height of the viewport */
+}
+
+.container-fluid {
+    flex: 1; /* Allow the container to grow to fill remaining space */
+    display: flex;
+}
+
+.left-container {
+    background-color: #BF3131;
+    padding: 30px;
+    width: 250px;
+}
+
+.central-container {
+    flex: 1; /* Allow the central container to take up remaining space */
+    padding: 30px;
+    overflow-y: auto; /* Enable vertical scrolling when content overflows */
+}
+
+.card-section {
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+}
+
+.btn-primary {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #007bff;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+.table {
+    margin-bottom: 0;
+}
+
+    .table th,
+    .table td {
+        padding: 8px;
+        vertical-align: middle;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+        color: #333333;
+        font-weight: bold;
+        border: 1px solid #dee2e6;
+    }
+
+    .table td {
+        border: 1px solid #dee2e6;
+    }
+
+    .table a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+        .table a:hover {
+            text-decoration: underline;
+        }
+
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 4px 0;
+    background-color: #ffffff;
+    color: white;
+    width: 100%;
+}

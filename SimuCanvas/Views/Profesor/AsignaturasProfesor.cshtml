@@ -1,16 +1,94 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    ViewData["Title"] = "Asignaturas Profesor";
+    int idCurso = (int)ViewBag.CourseId;
+
 }
 
-<!DOCTYPE html>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/AsignaturaProfesorSheet.css">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>AsignaturasProfesor</title>
-</head>
-<body>
-    <h1>assigments</h1>
-</body>
-</html>
+<div class="container-fluid">
+    <div class="left-container">
+        <img src="~/css/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+        <a href="@Url.Action("Profesor", "Home")" type="button" class="btn btn-secondary btn-block mb-2">
+            <i class="fas fa-home"></i>
+            Home
+        </a>
+        <a href="@Url.Action("PerfilProfesor", "Profesor")" class="btn btn-secondary btn-block">
+            <i class="fa fa-user"></i>
+            Perfil de Usuario
+        </a>
+        <a href="@Url.Action("CursosProfesor", "Profesor")" class="btn btn-secondary btn-block">
+            <i class="fas fa-book"></i>
+            Cursos
+        </a>
+        <form asp-action="SignOut" asp-controller="Profesor" method="post">
+            <button type="submit" class="btn btn-dark btn-block">
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+            </button>
+        </form>
+    </div>
+    <div class="col-md-9 central-container">
+        <h4 class="section-title mb-4">Asignaturas Profesor</h4>
+
+        <div class="card-section">
+            <h4 class="section-title mb-3">Crear Asignación</h4>
+            <form method="post" action="@Url.Action("CrearAsignacion", "Profesor")">
+                <input type="hidden" name="assignment.CourseId" value="@ViewBag.CourseId" />
+                <div class="form-group">
+                    <label for="assignment.Title">Título:</label>
+                    <input type="text" class="form-control" id="assignment.Title" name="assignment.Title" required />
+                </div>
+                <div class="form-group">
+                    <label for="assignment.Description">Descripción:</label>
+                    <textarea class="form-control" id="assignment.Description" name="assignment.Description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="assignment.DueDate">Fecha Límite:</label>
+                    <input type="date" class="form-control" id="assignment.DueDate" name="assignment.DueDate" required />
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Crear Asignación</button>
+            </form>
+
+        </div>
+
+        <hr />
+
+
+        <h2>Asignaciones y Entregas</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha Límite</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var assignment in ViewBag.Assignments)
+                    {
+                        if (assignment.CourseId == ViewBag.CourseId)
+                        {
+                            <tr>
+                                <td>@assignment.Title</td>
+                                <td>@assignment.Description</td>
+                                <td>@assignment.DueDate.ToShortDateString()</td>
+                                <td>
+                                    <a href="#">Ver entregas</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        </div>
+    </div>
+</div>

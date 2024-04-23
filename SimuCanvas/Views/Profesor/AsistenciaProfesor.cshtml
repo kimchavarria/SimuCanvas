@@ -5,39 +5,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Asistencia</h2>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/AsistenciaProfesorSheet.css">
 
-<form asp-action="AsistenciaProfesor" method="post">
-    <input type="hidden" name="courseId" value="@((Model.Count > 0) ? Model[0].CourseId : 0)" />
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Estudiante</th>
-                <th>Asistencia</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var estudiante in Model)
-            {
-                <tr>
-                    <td>@estudiante.StudentName - @estudiante.StudentEmail</td>
-                    <td>
-                        <input type="checkbox" name="Estudiantes[@estudiante.StudentId]" value="true" /> Presente
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <button type="submit" class="btn btn-primary">Guardar Asistencia</button>
-</form>
-
-@if (TempData["AttendanceSaved"] != null && (bool)TempData["AttendanceSaved"])
-{
-    <div class="alert alert-success mt-3" role="alert">
-        ¡La asistencia se guardó correctamente!
+<div class="container-fluid">
+    <div class="left-container">
+        <img src="~/css/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+        <a href="@Url.Action("Profesor", "Home")" type="button" class="btn btn-secondary btn-block mb-2">
+            <i class="fas fa-home"></i>
+            Home
+        </a>
+        <a href="@Url.Action("PerfilProfesor", "Profesor")" class="btn btn-secondary btn-block">
+            <i class="fa fa-user"></i>
+            Perfil de Usuario
+        </a>
+        <a href="@Url.Action("CursosProfesor", "Profesor")" class="btn btn-secondary btn-block">
+            <i class="fas fa-book"></i>
+            Cursos
+        </a>
+        <form asp-action="SignOut" asp-controller="Profesor" method="post">
+            <button type="submit" class="btn btn-dark btn-block">
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+            </button>
+        </form>
     </div>
-    <a href="@Url.Action("DetalleCursos", "Profesor", new { courseId = Model[0].CourseId })" class="btn btn-primary mt-3">Volver a Detalle Cursos</a>
-}
+    <!-- Central Container -->
+    <div class="col-md-9 central-container">
+        <div class="card">
+            <div class="card-section">
+                <h2>Asistencia</h2>
 
+                <form asp-action="AsistenciaProfesor" method="post">
+                    <input type="hidden" name="courseId" value="@((Model.Count > 0) ? Model[0].CourseId : 0)" />
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Estudiante</th>
+                                <th>Asistencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var estudiante in Model)
+                            {
+                                <tr>
+                                    <td>@estudiante.StudentName - @estudiante.StudentEmail</td>
+                                    <td>
+                                        <input type="checkbox" name="Estudiantes[@estudiante.StudentId]" value="true" /> Presente
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <button type="submit" class="btn btn-primary">Guardar Asistencia</button>
+                </form>
+
+                @if (TempData["AttendanceSaved"] != null && (bool)TempData["AttendanceSaved"])
+                {
+                    <div class="alert alert-success mt-3" role="alert">
+                        ¡La asistencia se guardó correctamente!
+                    </div>
+                    <a href="@Url.Action("DetalleCursos", "Profesor", new { courseId = Model[0].CourseId })" class="btn btn-primary mt-3">Volver a Detalle Cursos</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>

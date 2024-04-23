@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using SimuCanvas.Data;
 using SimuCanvas.Logic;
 using SimuCanvas.Models;
+using System.Text.RegularExpressions;
+using System.Data;
 
 namespace SimuCanvas.Controllers
 {
@@ -67,12 +69,10 @@ namespace SimuCanvas.Controllers
         public IActionResult DetalleCursos(int courseId)
         {
             var curso = _profesorLogica.ObtenerCursoPorId(courseId);
-
             if (curso == null)
             {
                 return NotFound();
             }
-
             return View(curso);
         }
 
@@ -85,7 +85,6 @@ namespace SimuCanvas.Controllers
         [HttpPost]
         public IActionResult AsistenciaProfesor(int courseId, Dictionary<int, bool> Estudiantes)
         {
-            // Get an instance of ProfesorLogica
             ProfesorLogica profesorLogica = new ProfesorLogica(_dbUsuario);
 
             foreach (var kvp in Estudiantes)
@@ -93,27 +92,105 @@ namespace SimuCanvas.Controllers
                 int studentId = kvp.Key;
                 bool isPresent = kvp.Value;
 
-                // Call the InsertAttendance method from ProfesorLogica
                 profesorLogica.InsertAttendance(studentId, courseId, DateTime.Today, isPresent);
             }
-
-            // Set the TempData to indicate that attendance was saved successfully
             TempData["AttendanceSaved"] = true;
-
-            // Redirect to action instead of returning view directly
             return RedirectToAction("AsistenciaProfesor", new { courseId = courseId });
         }
 
-
-
-        public IActionResult AsignaturasProfesor()
+        public IActionResult AsignaturasProfesor(int idCurso)
         {
+            var assignments = _profesorLogica.GetAllAssignments();
+            ViewBag.Assignments = assignments;
+            ViewBag.CourseId = idCurso;
             return View();
         }
 
-        public IActionResult GruposProfesor()
+        [HttpGet]
+        public IActionResult CrearAsignacion(int idCurso)
         {
+            ViewBag.CourseId = idCurso;
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult CrearAsignacion(Assignment assignment)
+        {
+            try
+            {
+                _profesorLogica.CreateAssignment(assignment.CourseId, assignment.Title, assignment.Description, assignment.DueDate);
+                TempData["Message"] = "Assignment created successfully!";
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "Failed to create assignment: " + ex.Message;
+            }
+
+            return RedirectToAction("AsignaturasProfesor", new { idCurso = assignment.CourseId });
+        }
+
+
+
+        public IActionResult GruposProfesor(int idCurso)
+        {
+            var groups = _profesorLogica.GetGroupsByCourseId(idCurso);
+            var students = _profesorLogica.ObtenerEstudiantesRegistradosEnCurso(idCurso);
+            ViewBag.CourseId = idCurso;
+            ViewBag.Students = students;
+            return View(groups);
+        }
+
+        [HttpPost]
+        public IActionResult CrearGrupo(string groupName, int idCurso)
+        {
+            try
+            {
+                _profesorLogica.CreateGroup(idCurso, groupName);
+                TempData["Message"] = "Group created successfully!";
+            }
+            catch (ArgumentException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction("GruposProfesor", new { idCurso = idCurso });
+        }
+
+
+        [HttpPost]
+        public IActionResult AsignarEstudianteAGrupo(int studentId, int groupId, int courseId)
+        {
+            bool success = _profesorLogica.AssignStudentToGroup(studentId, groupId);
+            if (success)
+            {
+                TempData["Message"] = "Student assigned to group successfully!";
+                return Json(new { success = true });
+            }
+            else
+            {
+                TempData["Error"] = "Failed to assign student to group.";
+                return Json(new { success = false });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult RemoverEstudianteDeGrupo(int studentId, int groupId, int courseId)
+        {
+            bool success = _profesorLogica.RemoveStudentFromGroup(studentId, groupId);
+            if (success)
+            {
+                TempData["Message"] = "Student removed from group successfully!";
+                return Json(new { success = true });
+            }
+            else
+            {
+                TempData["Error"] = "Failed to remove student from group.";
+                return Json(new { success = false });
+            }
         }
 
         public IActionResult AdminEstudiantes()

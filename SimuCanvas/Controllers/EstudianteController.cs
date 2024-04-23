@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using SimuCanvas.Data;
 using SimuCanvas.Models;
+using SimuCanvas.Logic;
 
 namespace SimuCanvas.Controllers
 {
@@ -10,11 +11,13 @@ namespace SimuCanvas.Controllers
     {
         private readonly PerfilLogica _dbUsuario;
         private readonly EstudiantesLogica _estudiantesLogica;
+        private readonly ProfesorLogica _profesorLogica;
 
-        public EstudianteController(PerfilLogica dbUsuario, EstudiantesLogica estudiantesLogica)
+        public EstudianteController(PerfilLogica dbUsuario, EstudiantesLogica estudiantesLogica, ProfesorLogica profesorLogica)
         {
             _dbUsuario = dbUsuario;
             _estudiantesLogica = estudiantesLogica;
+            _profesorLogica = profesorLogica;
         }
 
         public IActionResult PerfilEstudiante()
@@ -62,22 +65,41 @@ namespace SimuCanvas.Controllers
             // Get student ID from current logged in user
             var studentId = ObtenerUsuarioActual().IdUsuario;
 
-            // Get attendance records for the student in the specified course
             var attendanceRecords = _estudiantesLogica.ObtenerAsistenciaEstudianteEnCurso(studentId, courseId);
 
-            // Pass the attendance records to the view
             return View(attendanceRecords);
         }
-
         public IActionResult AsignaturasEstudiante()
         {
-            return View();
+
+            var assignments = _profesorLogica.GetAllAssignments(); // Suponiendo que tienes un método para obtener todas las asignaciones
+
+            return View(assignments);
         }
+
+        public IActionResult AssignmentDetails(int assignmentId)
+        {
+            // Retrieve assignment details
+            Assignment assignment = _estudiantesLogica.GetAssignmentDetails(assignmentId);
+            if (assignment == null)
+            {
+                return NotFound();
+            }
+
+            // Display assignment details view
+            return View(assignment);
+        }
+
+       
 
         public IActionResult GruposEstudiante()
         {
-            return View();
+            var usuario = ObtenerUsuarioActual();
+            var gruposEstudiante = _estudiantesLogica.ObtenerGruposEstudiante(usuario.IdUsuario);
+            return View(gruposEstudiante);
         }
+
+
 
         public async Task<IActionResult> SignOut()
         {

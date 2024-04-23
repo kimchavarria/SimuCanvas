@@ -1,18 +1,17 @@
 ﻿body {
     font-family: 'Open Sans', Arial, sans-serif;
     background-color: #f7fafc;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
 .container-fluid {
-    flex: 1;
+    padding: 20px 0; 
+    padding-bottom: 60px; 
 }
 
 .left-container {
     background-color: #d0abee;
     padding: 30px;
+    margin-top: 20px; /* Added top margin */
 }
 
     .left-container a, .left-container button {
@@ -43,6 +42,7 @@
 
     .central-container {
         margin-left: 250px;
+        margin-top: 20px; /* Added top margin */
     }
 }
 
@@ -62,9 +62,14 @@
     font-weight: bold;
 }
 
+
 .footer {
-    background-color: #d0abee;
-    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Adjust height as needed */
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+    padding: 20px 0;
     text-align: center;
-    margin-top: auto;
 }

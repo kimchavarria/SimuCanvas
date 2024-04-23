@@ -68,3 +68,22 @@ CREATE TABLE GROUPMEMBERS (
     FOREIGN KEY (group_id) REFERENCES Groups(group_id)
 );
 
+CREATE TABLE ASSIGNMENT (
+    assignment_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    course_id INT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    description VARCHAR(200) NOT NULL,
+    due_date DATE NOT NULL,
+    CONSTRAINT FK_Assignment_Course FOREIGN KEY (course_id) REFERENCES COURSE(course_id)
+);
+
+CREATE TABLE SUBMISSION (
+    submission_id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+    assignment_id INT NOT NULL,
+    student_id INT NOT NULL,
+    submission_date DATETIME NOT NULL,
+    file_path VARCHAR(255) NOT NULL, -- Assuming file path to the submitted PDF
+    grade INT, -- Nullable, as it will be updated after grading
+    CONSTRAINT FK_Submission_Assignment FOREIGN KEY (assignment_id) REFERENCES Assignment(assignment_id),
+    CONSTRAINT FK_Submission_Student FOREIGN KEY (student_id) REFERENCES USUARIOS(id_usuario)
+);

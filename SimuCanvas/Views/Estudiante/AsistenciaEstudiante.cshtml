@@ -1,21 +1,58 @@
 ﻿@model List<SimuCanvas.Models.Attendance>
 
-<h2>Registro de Asistencia</h2>
+@{
+    ViewData["Title"] = "Registro de Asistencia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Fecha</th>
-            <th>Asistencia</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var record in Model)
-        {
-            <tr>
-                <td>@record.AttendanceDate.ToShortDateString()</td>
-                <td>@(record.IsPresent ? "Presente" : "Ausente")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/AsistenciaEstudianteSheet.css">
+
+<div class="container-fluid">
+    <div class="left-container">
+        <img src="~/css/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+        <a href="@Url.Action("Estudiantes", "Home")" type="button" class="btn btn-secondary btn-block mb-2">
+            <i class="fas fa-home"></i>
+            Home
+        </a>
+        <a href="@Url.Action("PerfilEstudiante", "Estudiante")" class="btn btn-secondary btn-block">
+            <i class="fa fa-user"></i>
+            Perfil de Usuario
+        </a>
+        <a href="@Url.Action("CursosEstudiante", "Estudiante")" class="btn btn-secondary btn-block">
+            <i class="fas fa-book"></i>
+            Cursos
+        </a>
+        <form asp-action="SignOut" asp-controller="Profesor" method="post">
+            <button type="submit" class="btn btn-dark btn-block">
+                <i class="fas fa-sign-out-alt"></i>
+                Sign Out
+            </button>
+        </form>
+    </div>
+    <div class="col-md-9 central-container">
+        <div class="card">
+            <div class="card-section">
+                <h2>Registro de Asistencia</h2>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var record in Model)
+                        {
+                            <tr>
+                                <td>@record.AttendanceDate.ToShortDateString()</td>
+                                <td>@(record.IsPresent ? "Presente" : "Ausente")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

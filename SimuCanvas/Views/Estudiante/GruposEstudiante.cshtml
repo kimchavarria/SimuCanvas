@@ -1,15 +1,59 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@model List<Groups>
 
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>GruposEstudiante</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/GruposEstudianteSheet.css">
+    <title>Groups</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
+    <div class="container-fluid">
+        <div class="left-container">
+            <img src="~/css/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+            <a href="@Url.Action("Estudiantes", "Home")" type="button" class="btn btn-secondary btn-block mb-2">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+            <a href="@Url.Action("PerfilEstudiante", "Estudiante")" class="btn btn-secondary btn-block">
+                <i class="fa fa-user"></i>
+                Perfil de Usuario
+            </a>
+            <a href="@Url.Action("CursosEstudiante", "Estudiante")" class="btn btn-secondary btn-block">
+                <i class="fas fa-book"></i>
+                Cursos
+            </a>
+            <form asp-action="SignOut" asp-controller="Estudiante" method="post">
+                <button type="submit" class="btn btn-dark btn-block">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sign Out
+                </button>
+            </form>
+        </div>
+        <div class="col-md-9 central-container">
+            <div class="container">
+                <h1>Mis Grupos</h1>
+                @foreach (var group in Model)
+                {
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            @group.GroupName
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Miembros:</h5>
+                            <ul class="list-group">
+                                @foreach (var member in group.Members)
+                                {
+                                    <li class="list-group-item">@member</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </body>
 </html>

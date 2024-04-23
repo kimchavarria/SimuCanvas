@@ -1,59 +1,70 @@
-﻿@{
-    Layout = null;
-}
+﻿@model List<Assignment>
 
-<!DOCTYPE html>
 
-<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asignaturas Estudiante</title>
+    <title>Asignaturas</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="AsignaturasEstudiante.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="~/css/AsignaturasEstudiante.css">
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
     <div class="container-fluid">
         <div class="left-container">
-            <img src="ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
-            <a href="pagina.html" class="btn btn-secondary btn-block">
+            <img src="~/css/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+            <a href="@Url.Action("Estudiantes", "Home")" type="button" class="btn btn-secondary btn-block mb-2">
                 <i class="fas fa-home"></i>
                 Home
             </a>
-            <a href="Perfil.html" class="btn btn-secondary btn-block">
+            <a href="@Url.Action("PerfilEstudiante", "Estudiante")" class="btn btn-secondary btn-block">
                 <i class="fa fa-user"></i>
                 Perfil de Usuario
             </a>
-            <a href="CursosEstudiante.html" class="btn btn-secondary btn-block">
+            <a href="@Url.Action("CursosEstudiante", "Estudiante")" class="btn btn-secondary btn-block">
                 <i class="fas fa-book"></i>
                 Cursos
             </a>
-            <button class="btn btn-dark btn-block" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i>
-                Sign Out
-            </button>
+            <form asp-action="SignOut" asp-controller="Estudiante" method="post">
+                <button type="submit" class="btn btn-dark btn-block">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sign Out
+                </button>
+            </form>
         </div>
         <div class="central-container">
             <div class="card">
                 <div class="card-section">
-                    <h2 class="section-title">Asignaturas</h2>
+                    <h1 class="section-title">Asignaturas</h1>
                     <div class="content-grid">
                         <div class="content-block">
                             <div class="details-actions">
                                 <div class="flex mb-4 items-center">
                                     <div class="w-1/4 px-3 font-bold">Tarea</div>
+                                    <div class="w-1/4 px-3 font-bold">Descripción</div>
                                     <div class="w-1/4 px-3 font-bold">Fecha de entrega</div>
-                                    <div class="w-1/4 px-3 font-bold">Estado</div>
                                     <div class="w-1/4 px-3 font-bold">Nota</div>
-                                    <div class="w-1/4 px-3 font-bold">Comentarios</div>
+                                    <div class="w-1/4 px-3 font-bold">Acciones</div>
                                 </div>
-                                <div class="flex mb-4 items-center">
-                                    <div class="w-1/4 px-3">Tarea 2</div>
-                                    <div class="w-1/4 px-3">2024-04-15</div>
-                                    <div class="w-1/4 px-3">Completado</div>
-                                    <div class="w-1/4 px-3">85</div>
-                                    <div class="w-1/4 px-3">Buen trabajo</div>
-                                </div>
+                                @foreach (var assignment in Model)
+                                {
+                                    <div class="flex mb-4 items-center">
+                                        <div class="w-1/4 px-3">@assignment.Title</div>
+                                        <div class="w-1/4 px-3">@assignment.Description</div>
+                                        <div class="w-1/4 px-3">@assignment.DueDate.ToShortDateString()</div>
+                                        <div class="w-1/4 px-3">0/25</div>
+                                        <div class="w-1/4 px-3">
+                                            <form asp-action="SubmitAssignment" method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="AssignmentId" value="@assignment.AssignmentId" />
+                                                <div class="form-group">
+                                                    <input type="file" name="File" class="form-control-file" />
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
@@ -61,7 +72,4 @@
             </div>
         </div>
     </div>
-    
 </body>
-</html>
-

@@ -1,5 +1,7 @@
 ﻿using SimuCanvas.Models;
 using System.Data.SqlClient;
+using System.Security.Claims;
+using System.Text.RegularExpressions;
 
 namespace SimuCanvas.Data
 {
@@ -362,6 +364,136 @@ namespace SimuCanvas.Data
             }
 
             return attendanceRecords;
+        }
+
+
+        public Assignment GetAssignmentDetails(int assignmentId)
+        {
+            Assignment assignment = null;
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT assignment_id, course_id, title, description, due_date FROM ASSIGNMENT WHERE assignment_id = @AssignmentId";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@AssignmentId", assignmentId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        assignment = new Assignment
+                        {
+                            AssignmentId = reader.GetInt32(0),
+                            CourseId = reader.GetInt32(1),
+                            Title = reader.GetString(2),
+                            Description = reader.GetString(3),
+                            DueDate = reader.GetDateTime(4)
+                        };
+                    }
+                }
+            }
+
+            return assignment;
+        }
+
+        public List<Groups> ObtenerGruposEstudiante(int studentId)
+        {
+            List<Groups> gruposEstudiante = new List<Groups>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = @"
+            SELECT g.group_id, g.group_name, u.name AS member_name
+            FROM GROUPS g
+            INNER JOIN GROUPMEMBERS gm ON g.group_id = gm.group_id
+            INNER JOIN USUARIOS u ON gm.student_id = u.id_usuario
+            WHERE gm.group_id IN (
+                SELECT group_id
+                FROM GROUPMEMBERS
+                WHERE student_id = @studentId
+            )";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@studentId", studentId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int groupId = reader.GetInt32(0);
+                        string groupName = reader.GetString(1);
+                        string memberName = !reader.IsDBNull(2) ? reader.GetString(2) : null;
+
+                        // Check if the group already exists in the list
+                        Groups existingGroup = gruposEstudiante.FirstOrDefault(g => g.GroupId == groupId);
+                        if (existingGroup != null)
+                        {
+                            if (!string.IsNullOrEmpty(memberName))
+                            {
+                                existingGroup.Members.Add(memberName);
+                            }
+                        }
+                        else
+                        {
+                            Groups newGroup = new Groups
+                            {
+                                GroupId = groupId,
+                                GroupName = groupName,
+                                Members = new List<string>()
+                            };
+                            if (!string.IsNullOrEmpty(memberName))
+                            {
+                                newGroup.Members.Add(memberName);
+                            }
+                            gruposEstudiante.Add(newGroup);
+                        }
+                    }
+                }
+            }
+
+            return gruposEstudiante;
+        }
+
+        public List<Assignment> ObtenerAsignaturasCurso(int studentId, int courseId)
+        {
+            List<Assignment> asignaturasCurso = new List<Assignment>();
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                string query = @"
+    SELECT a.assignment_id, a.course_id, a.title, a.description, a.due_date
+    FROM ASSIGNMENT a
+    WHERE a.course_id = @courseId";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@courseId", courseId);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Assignment assignment = new Assignment
+                        {
+                            AssignmentId = reader.GetInt32(0),
+                            CourseId = reader.GetInt32(1),
+                            Title = reader.GetString(2),
+                            Description = reader.GetString(3),
+                            DueDate = reader.GetDateTime(4)
+                        };
+
+                        asignaturasCurso.Add(assignment);
+                    }
+                }
+            }
+
+            return asignaturasCurso;
         }
 
     }

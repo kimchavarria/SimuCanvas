@@ -12,13 +12,13 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-
-
 <div class="container-fluid">
     <div class="left-container">
-        <!-- Logo here -->
-        <img src="~/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
-        <!-- Buttons on the left side -->
+        <img src="~/css/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+        <a href="@Url.Action("Profesor", "Home")" type="button" class="btn btn-secondary btn-block mb-2">
+            <i class="fas fa-home"></i>
+            Home
+        </a>
         <a href="@Url.Action("PerfilProfesor", "Profesor")" class="btn btn-secondary btn-block">
             <i class="fa fa-user"></i>
             Perfil de Usuario
@@ -34,13 +34,12 @@
             </button>
         </form>
     </div>
-    <!-- Central Container -->
     <div class="col-md-9 central-container">
         <div class="card">
             <div class="card-section">
                 <h1>@Model.Title</h1>
                 <div class="course-faculty">
-                    <img class="instructor-image" src="~/Images/profesor.jpeg" alt="Instructor's Placeholder Image">
+                    <img class="instructor-image" src="~/css/Images/profesor.jpeg" alt="Instructor's Placeholder Image">
                     <div class="instructor-info">
                         <p class="instructor-name">
                             @ViewBag.ProfessorName

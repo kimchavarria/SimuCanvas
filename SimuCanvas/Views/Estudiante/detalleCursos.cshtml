@@ -15,9 +15,11 @@
 
 <div class="container-fluid">
     <div class="left-container">
-        <!-- Logo here -->
-        <img src="~/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
-        <!-- Buttons on the left side -->
+        <img src="~/css/Images/ulacitlogo.png" class="img-fluid mb-5" alt="ULACIT LOGO">
+        <a href="@Url.Action("Estudiantes", "Home")" type="button" class="btn btn-secondary btn-block mb-2">
+            <i class="fas fa-home"></i>
+            Home
+        </a>
         <a href="@Url.Action("PerfilEstudiante", "Estudiante")" class="btn btn-secondary btn-block">
             <i class="fa fa-user"></i>
             Perfil de Usuario
@@ -33,17 +35,15 @@
             </button>
         </form>
     </div>
-    <!-- Central Container -->
     <div class="col-md-9 central-container">
         <div class="card">
             <div class="card-section">
                 <h1>@Model.Title</h1>
                 <div class="course-faculty">
-                    <img class="instructor-image" src="~/Images/profesor.jpeg" alt="Instructor's Placeholder Image">
+                    <img class="instructor-image" src="~/css/Images/profesor.jpeg" alt="Instructor's Placeholder Image">
                     <div class="instructor-info">
                         <p class="instructor-name">
                             @{
-                                // Obtener el nombre del profesor asociado al curso
                                 var profesor = _estudiantesLogica.ObtenerUsuarioPorId(Model.FacultyId);
                                 if (profesor != null)
                                 {
@@ -70,8 +70,8 @@
                     <div class="content-block">
                         <h3 class="section-title">Herramientas</h3>
                         <a href="@Url.Action("AsistenciaEstudiante", "Estudiante", new { courseId = Model.CourseId })" class="btn btn-primary">Asistencia</a>
-                        <a href="#" class="btn btn-primary">Asignaturas</a>
-                        <a href="#" class="btn btn-primary">Grupos</a>
+                        <a href="@Url.Action("AsignaturasEstudiante", "Estudiante", new { courseId = Model.CourseId })" class="btn btn-primary">Asignaturas</a>
+                        <a href="@Url.Action("GruposEstudiante", "Estudiante", new { courseId = Model.CourseId })" class="btn btn-primary">Grupos</a>
                     </div>
                 </div>
             </div>
